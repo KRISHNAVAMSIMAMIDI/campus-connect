@@ -1,19 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
 /* =========================
    COLOR PALETTE
 ========================= */
 
 :root {
   --primary: #FF5733;
+  --primary-dark: #E64A24;
+
   --accent: #00D4FF;
+
   --background: #FDFDFD;
 
-  --sidebar: #FF5733;
+  --sidebar: #E64A24;
   --header: #FFFFFF;
 
   --card-bg: #FFFFFF;
 
   --text-dark: #1F2937;
   --text-light: #FFFFFF;
+
+  --text-secondary: #64748B;
 
   --border: #E5E7EB;
 }
@@ -29,19 +36,13 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif;
   background: var(--background);
+  font-family: "Montserrat", sans-serif;
 }
-
-/* =========================
-   DASHBOARD
-========================= */
 
 .dashboard {
   min-height: 100vh;
   background: var(--background);
-  color: var(--text-dark);
-  text-align: left;
 }
 
 /* =========================
@@ -54,10 +55,8 @@ body {
   z-index: 1000;
 
   display: flex;
-  align-items: center;
   justify-content: space-between;
-
-  gap: 24px;
+  align-items: center;
 
   padding: 16px 28px;
 
@@ -65,7 +64,7 @@ body {
 
   border-bottom: 3px solid var(--accent);
 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 .header-left,
@@ -75,34 +74,30 @@ body {
   gap: 14px;
 }
 
-.header h2 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--text-dark);
-}
-
-.header p {
-  margin: 2px 0 0;
-  color: #64748B;
-  font-size: 14px;
-}
-
 .logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
   object-fit: cover;
 }
 
-/* =========================
-   HEADER BUTTONS
-========================= */
+.header h2 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: 0.4px;
+}
+
+.header p {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
 
 .back-btn,
 .icon-btn {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
 
   border: 1px solid var(--border);
 
@@ -110,19 +105,47 @@ body {
 
   background: white;
 
-  color: var(--text-dark);
-
   cursor: pointer;
 
   font-size: 18px;
 
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .back-btn:hover,
 .icon-btn:hover {
   background: #E6FAFF;
   border-color: var(--accent);
+}
+
+/* =========================
+   NOTIFICATION BADGE
+========================= */
+
+.notification-wrapper {
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+
+  top: -5px;
+  right: -5px;
+
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+
+  background: red;
+  color: white;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* =========================
@@ -136,29 +159,29 @@ body {
 .profile-menu {
   position: absolute;
 
+  top: 52px;
   right: 0;
-  top: 50px;
 
-  width: 180px;
-
-  padding: 8px;
+  width: 190px;
 
   background: white;
 
   border: 1px solid var(--border);
 
-  border-radius: 10px;
+  border-radius: 12px;
 
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  overflow: hidden;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
 }
 
 .profile-menu p {
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px 15px;
 
   cursor: pointer;
 
-  color: var(--text-dark);
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .profile-menu p:hover {
@@ -171,9 +194,8 @@ body {
 
 .main-container {
   display: grid;
-  grid-template-columns: 230px 1fr;
-
-  min-height: calc(100vh - 83px);
+  grid-template-columns: 240px 1fr;
+  min-height: calc(100vh - 84px);
 }
 
 /* =========================
@@ -181,42 +203,41 @@ body {
 ========================= */
 
 .sidebar {
+  background: var(--sidebar);
+
+  padding: 20px;
+
   display: flex;
   flex-direction: column;
 
   gap: 10px;
-
-  padding: 20px 16px;
-
-  background: var(--sidebar);
 }
 
 .sidebar button {
-  width: 100%;
-
-  padding: 12px 14px;
-
   border: none;
-
-  border-radius: 10px;
 
   background: transparent;
 
   color: white;
 
-  cursor: pointer;
-
-  font-size: 15px;
-
   text-align: left;
 
-  transition: 0.3s;
+  padding: 14px 16px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  transition: all 0.3s ease;
 }
 
 .sidebar button:hover,
 .sidebar button:first-child {
   background: var(--accent);
-  color: #0F172A;
+  color: var(--text-dark);
 }
 
 /* =========================
@@ -224,41 +245,36 @@ body {
 ========================= */
 
 .content {
+  padding: 30px;
+
   display: flex;
   flex-direction: column;
 
-  gap: 28px;
-
-  padding: 28px;
+  gap: 32px;
 }
 
 .content section {
   display: flex;
   flex-direction: column;
-
-  gap: 14px;
+  gap: 16px;
 }
 
 .content h2 {
-  margin: 0;
-
-  font-size: 22px;
-
-  font-weight: 700;
-
-  color: var(--primary);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-dark);
 }
 
 /* =========================
-   CARD CONTAINER
+   GRID
 ========================= */
 
 .cards {
   display: grid;
 
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 
-  gap: 18px;
+  gap: 20px;
 }
 
 /* =========================
@@ -273,75 +289,59 @@ body {
 
   border: 1px solid var(--border);
 
-  border-radius: 14px;
+  border-radius: 16px;
 
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-.card,
-.alert-card {
-  padding: 18px;
+.card {
+  padding: 22px;
 }
 
-.card h3,
-.alert-card h4,
-.poster h4 {
-  margin: 0 0 8px;
-
-  color: var(--text-dark);
-}
-
-.card p,
-.alert-card p {
-  margin: 0 0 16px;
-
-  color: #64748B;
-
-  font-size: 15px;
-}
-
-/* =========================
-   BUTTONS
-========================= */
-
-.card button,
-.alert-card button,
-.poster button {
-  border: none;
-
-  border-radius: 8px;
-
-  background: var(--primary);
-
-  color: white;
-
-  cursor: pointer;
-
+.card h3 {
+  font-size: 20px;
   font-weight: 700;
 
-  padding: 10px 16px;
+  color: var(--text-dark);
 
-  transition: 0.3s;
+  margin-bottom: 10px;
 }
 
-.card button:hover,
-.alert-card button:hover,
-.poster button:hover {
-  background: #E64A24;
+.card p {
+  font-size: 15px;
+  color: var(--text-secondary);
+
+  margin-bottom: 15px;
 }
 
 /* =========================
-   RECRUITMENT ALERTS
+   ALERT CARDS
 ========================= */
 
 .alert-card {
+  padding: 20px;
+
   background: #FFF4F1;
 
   border-left: 5px solid var(--primary);
 }
 
+.alert-card h4 {
+  font-size: 20px;
+  font-weight: 700;
+
+  color: var(--text-dark);
+
+  margin-bottom: 10px;
+}
+
+.alert-card p {
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+}
+
 /* =========================
-   EVENT POSTERS
+   POSTERS
 ========================= */
 
 .poster {
@@ -351,22 +351,50 @@ body {
 
 .poster img {
   width: 100%;
-
-  aspect-ratio: 5 / 3;
-
+  height: 190px;
   object-fit: cover;
-
-  display: block;
-}
-
-.poster h4,
-.poster button {
-  margin-left: 16px;
-  margin-right: 16px;
 }
 
 .poster h4 {
-  margin-top: 14px;
+  margin: 16px;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  color: var(--text-dark);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.card button,
+.alert-card button,
+.poster button {
+  margin-left: 16px;
+
+  background: var(--primary);
+
+  color: white;
+
+  border: none;
+
+  border-radius: 10px;
+
+  padding: 10px 18px;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.card button:hover,
+.alert-card button:hover,
+.poster button:hover {
+  background: var(--primary-dark);
 }
 
 /* =========================
@@ -374,39 +402,19 @@ body {
 ========================= */
 
 .announcement {
-  padding: 14px 16px;
-
-  background: white;
+  padding: 16px;
 
   border-left: 5px solid var(--accent);
-}
 
-/* =========================
-   SCROLLBAR
-========================= */
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
 
-@media (max-width: 760px) {
-
-  .header {
-    padding: 14px 16px;
-  }
-
-  .header h2 {
-    font-size: 17px;
-  }
+@media (max-width: 768px) {
 
   .main-container {
     grid-template-columns: 1fr;
@@ -415,14 +423,21 @@ body {
   .sidebar {
     flex-direction: row;
     overflow-x: auto;
-    padding: 12px;
   }
 
   .sidebar button {
-    min-width: 140px;
+    min-width: 150px;
   }
 
   .content {
     padding: 18px;
+  }
+
+  .header h2 {
+    font-size: 22px;
+  }
+
+  .content h2 {
+    font-size: 24px;
   }
 }
