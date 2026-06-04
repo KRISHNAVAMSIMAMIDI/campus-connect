@@ -1,8 +1,11 @@
+import React from "react";
+
 function Events() {
+
   return (
-    <main style={{ padding: "32px" }}>
-      <h1>Events</h1>
-    </main>
+    <div>
+      <Events />
+    </div>
   );
 }
 
