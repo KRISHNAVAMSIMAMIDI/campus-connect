@@ -1,0 +1,48 @@
+.clubs-page {
+  min-height: 100vh;
+  background: #FDFDFD;
+  padding: 20px;
+}
+
+.clubs-navbar {
+  background: #FF5733;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 12px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-actions input {
+  padding: 10px;
+  width: 250px;
+  border-radius: 8px;
+  border: none;
+}
+
+.nav-actions button {
+  background: #00D4FF;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.clubs-grid {
+  margin-top: 30px;
+
+  display: grid;
+
+  /* EXACTLY 3 CARDS PER ROW */
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 25px;
+}

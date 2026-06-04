@@ -1,0 +1,44 @@
+.clubs-page {
+  min-height: 100vh;
+  background: #fdfdfd;
+}
+
+.clubs-navbar {
+  background: #ff5733;
+  color: white;
+  padding: 15px 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-actions input {
+  padding: 10px;
+  width: 250px;
+  border: none;
+  border-radius: 8px;
+}
+
+.nav-actions button {
+  background: #00d4ff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.clubs-grid {
+  padding: 30px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+  gap: 25px;
+}
