@@ -1,7 +1,9 @@
 import React from "react";
 import "./Events.css";
+import { useNavigate } from "react-router-dom";
 
 function Events() {
+const navigate = useNavigate();
   return (
 
     <div className="events-page">
@@ -41,7 +43,7 @@ function Events() {
               build innovative solutions with your team.
             </p>
 
-            <button>
+            <button onClick={() => navigate("/apply/event-registration")}>
               View Event
             </button>
 
@@ -72,7 +74,7 @@ function Events() {
               UI building techniques from industry mentors.
             </p>
 
-            <button>
+            <button onClick={() => navigate("/apply/event-registration")}>
               Register
             </button>
 
@@ -103,7 +105,7 @@ function Events() {
               and exciting cultural celebrations.
             </p>
 
-            <button>
+            <button onClick={() => navigate("/explore/cultural-events")}>
               Explore
             </button>
 
@@ -134,7 +136,7 @@ function Events() {
               your sporting excellence.
             </p>
 
-            <button>
+            <button onClick={() => navigate("/apply/tournament-registration")}>
               Join Tournament
             </button>
 
@@ -165,7 +167,7 @@ function Events() {
               and advanced research discussions.
             </p>
 
-            <button>
+            <button onClick={() => navigate("/apply/academic-event")}>
               Attend
             </button>
 

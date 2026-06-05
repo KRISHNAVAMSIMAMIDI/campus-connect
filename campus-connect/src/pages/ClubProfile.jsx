@@ -1,6 +1,7 @@
 import ClubProfileCard from "../components/ClubProfileCard";
 
 function ClubProfile() {
+
   const club = {
     name: "Coding Club",
 

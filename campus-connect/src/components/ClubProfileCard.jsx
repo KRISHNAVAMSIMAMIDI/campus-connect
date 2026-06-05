@@ -1,6 +1,9 @@
 import "./ClubProfileCard.css";
+import { useNavigate } from "react-router-dom";
 
 function ClubProfileCard({ club }) {
+  const navigate = useNavigate();
+
   return (
     <>
       {/* Banner */}
@@ -121,10 +124,8 @@ function ClubProfileCard({ club }) {
 
         {/* Buttons */}
         <div className="action-buttons">
-          <button>Apply To Join</button>
-          <button>Register Event</button>
-          <button>Message Club</button>
-          <button>Follow Updates</button>
+          <button onClick={() => navigate("/apply/event-registration")}>Apply To Join</button>
+          <button onClick={() => navigate("/message")}>Message Club</button>
         </div>
       </div>
     </>

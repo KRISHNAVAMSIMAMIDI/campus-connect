@@ -29,7 +29,7 @@ function ClubCard({ club }) {
       <div className="btn-group">
         <button
           className="join-btn"
-          onClick={() => alert(`Joined ${club.name}`)}
+           onClick={() => navigate("/apply/club-membership")}
         >
           🚀 Join Now
         </button>
