@@ -1,0 +1,123 @@
+.recruitments-page {
+  min-height: 100vh;
+  background-color: #FDFDFD;
+  padding: 60px;
+}
+
+.recruitments-title {
+  text-align: center;
+  font-size: 52px;
+  font-weight: 800;
+  color: #FF5733;
+}
+
+.recruitments-subtitle {
+  text-align: center;
+  max-width: 850px;
+  margin: 20px auto 50px;
+  font-size: 20px;
+  line-height: 1.8;
+  color: #555;
+}
+
+.recruitments-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 35px;
+}
+
+/* CARD */
+
+.recruitment-card {
+  background-color: white;
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0px 10px 30px rgba(0,0,0,0.08);
+  transition: 0.3s;
+  border: 1px solid rgba(0, 212, 255, 0.08);
+}
+
+.recruitment-card:hover {
+  transform: translateY(-8px);
+}
+
+.recruitment-card h2 {
+  margin-top: 20px;
+  font-size: 28px;
+  color: #222;
+}
+
+.recruitment-card h3 {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #00D4FF;
+}
+
+.recruitment-card p {
+  margin-top: 18px;
+  color: #666;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* DETAILS */
+
+.details {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #444;
+  font-size: 15px;
+}
+
+/* CATEGORY BADGES */
+
+.badge {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 30px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.technical {
+  background-color: #FF5733;
+}
+
+.workshop {
+  background-color: #00D4FF;
+}
+
+.cultural {
+  background-color: #9C27B0;
+}
+
+.sports {
+  background-color: #4CAF50;
+}
+
+.academic {
+  background-color: #3F51B5;
+}
+
+/* BUTTON */
+
+.recruitment-card button {
+  margin-top: 28px;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background-color: #FF5733;
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.recruitment-card button:hover {
+  background-color: #e64a26;
+}

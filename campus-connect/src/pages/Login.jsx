@@ -1,7 +1,9 @@
 import React from "react";
 import "./Login.css";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   return (
 
     <div className="login-page">
@@ -66,14 +68,13 @@ function Login() {
 
           <p className="register-text">
 
-            Don’t have an account?
+          Don’t have an account?
 
-            <span>
-              Register
-            </span>
+          <span onClick={() => navigate("/register")}>
+            Register
+          </span>
 
-          </p>
-
+        </p>
         </form>
 
       </div>

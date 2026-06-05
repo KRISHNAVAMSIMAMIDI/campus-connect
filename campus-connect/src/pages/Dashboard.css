@@ -38,11 +38,13 @@
 body {
   background: var(--background);
   font-family: "Montserrat", sans-serif;
+  overflow: hidden;
 }
 
 .dashboard {
-  min-height: 100vh;
+  height: 100vh;
   background: var(--background);
+  overflow: hidden;
 }
 
 /* =========================
@@ -195,7 +197,8 @@ body {
 .main-container {
   display: grid;
   grid-template-columns: 240px 1fr;
-  min-height: calc(100vh - 84px);
+  height: calc(100vh - 84px);
+  overflow: hidden;
 }
 
 /* =========================
@@ -211,6 +214,8 @@ body {
   flex-direction: column;
 
   gap: 10px;
+
+  overflow: hidden;
 }
 
 .sidebar button {
@@ -251,6 +256,9 @@ body {
   flex-direction: column;
 
   gap: 32px;
+
+  height: 100%;
+  overflow-y: auto;
 }
 
 .content section {
@@ -423,6 +431,7 @@ body {
   .sidebar {
     flex-direction: row;
     overflow-x: auto;
+    overflow-y: hidden;
   }
 
   .sidebar button {

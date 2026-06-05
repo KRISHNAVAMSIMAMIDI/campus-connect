@@ -33,7 +33,7 @@ function Profile() {
     recruitments: 2
   });
 
-  const [joinedClubs, setJoinedClubs] = useState([
+  const [joinedClubs] = useState([
     {
       id: 1,
       name: "Coding Club",
@@ -75,9 +75,9 @@ function Profile() {
     setIsEditing(false);
   };
 
-  const handleRemoveClub = (clubId) => {
-    setJoinedClubs(
-      joinedClubs.filter((club) => club.id !== clubId)
+  const handleRemoveRequest = (clubName) => {
+    alert(
+      `Remove request for ${clubName} has been sent to the club head.`
     );
   };
 
@@ -88,12 +88,6 @@ function Profile() {
 
       <div className="profile-header">
 
-        <button
-          className="back-btn"
-          onClick={() => navigate(-1)}
-        >
-          ←
-        </button>
 
         <h1>My Profile</h1>
 
@@ -371,7 +365,7 @@ function Profile() {
                       className="view-btn"
                       onClick={() =>
                         navigate(
-                          `/club/${club.id}`
+                          "/dashboard/club-profile"
                         )
                       }
                     >
@@ -381,10 +375,10 @@ function Profile() {
                     <button
                       className="remove-btn"
                       onClick={() =>
-                        handleRemoveClub(club.id)
+                        handleRemoveRequest(club.name)
                       }
                     >
-                      Leave Club
+                      Remove Request
                     </button>
 
                   </div>
@@ -406,7 +400,7 @@ function Profile() {
               <button
                 className="explore-btn"
                 onClick={() =>
-                  navigate("/clubs")
+                  navigate("/dashboard/clubs")
                 }
               >
                 Explore Clubs

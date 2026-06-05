@@ -1,0 +1,101 @@
+.application-page {
+  min-height: 100vh;
+  background-color: #FDFDFD;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+/* APPLICATION CARD */
+
+.application-card {
+  width: 500px;
+  background-color: white;
+  padding: 45px;
+  border-radius: 28px;
+  box-shadow: 0px 12px 35px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+/* TITLE */
+
+.application-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #FF5733;
+  font-size: 34px;
+  font-weight: 700;
+}
+
+/* ROLE */
+
+.selected-role {
+  background-color: rgba(0, 212, 255, 0.1);
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  font-size: 16px;
+  color: #444;
+}
+
+.selected-role span {
+  color: #FF5733;
+  font-weight: 700;
+  margin-left: 8px;
+}
+
+/* LABELS */
+
+.application-card label {
+  display: block;
+  margin-bottom: 8px;
+  margin-top: 10px;
+  font-size: 15px;
+  color: #444;
+  font-weight: 600;
+}
+
+/* INPUTS */
+
+.application-card input,
+.application-card textarea {
+  width: 100%;
+  padding: 13px;
+  border: 2px solid rgba(0, 212, 255, 0.25);
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s;
+  margin-bottom: 18px;
+}
+
+.application-card input:focus,
+.application-card textarea:focus {
+  border-color: #00D4FF;
+}
+
+.application-card textarea {
+  resize: none;
+  min-height: 100px;
+}
+
+/* BUTTON */
+
+.application-card button {
+  width: 100%;
+  padding: 15px;
+  background-color: #FF5733;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.application-card button:hover {
+  background-color: #e64a26;
+}
