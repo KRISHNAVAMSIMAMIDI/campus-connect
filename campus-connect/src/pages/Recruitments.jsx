@@ -46,7 +46,7 @@ function Recruitments() {
             <span>👥 Team: Web Development</span>
           </div>
 
-          <button onClick={() => navigate(`/apply/technical`)}>
+          <button onClick={() => navigate(`/dashboard/apply/technical`)}>
             Apply Now
           </button>
 
@@ -77,7 +77,7 @@ function Recruitments() {
             <span>🎤 Event Management</span>
           </div>
 
-          <button onClick={() => navigate(`/apply/workshop`)}>
+          <button onClick={() => navigate(`/dashboard/apply/workshop`)}>
             Apply Now
           </button>
 
@@ -108,7 +108,7 @@ function Recruitments() {
             <span>🎭 Performing Arts</span>
           </div>
 
-          <button onClick={() => navigate(`/apply/cultural`)}>
+          <button onClick={() => navigate(`/dashboard/apply/cultural`)}>
             Apply Now
           </button>
 
@@ -139,7 +139,7 @@ function Recruitments() {
             <span>🏆 Leadership Role</span>
           </div>
 
-          <button onClick={() => navigate(`/apply/sports`)}>
+          <button onClick={() => navigate(`/dashboard/apply/sports`)}>
             Apply Now
           </button>
 
@@ -170,7 +170,7 @@ function Recruitments() {
             <span>📚 Research Team</span>
           </div>
 
-          <button onClick={() => navigate(`/apply/academic`)}>
+          <button onClick={() => navigate(`/dashboard/apply/academic`)}>
             Apply Now
           </button>
 

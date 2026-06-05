@@ -36,7 +36,7 @@ function ClubCard({ club }) {
 
         <button
           className="explore-btn"
-          onClick={() => navigate("/ClubProfile")}
+          onClick={() => navigate("/dashboard/club-profile")}
         >
           🔍 Explore
         </button>
