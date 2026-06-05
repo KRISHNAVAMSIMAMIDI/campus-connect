@@ -39,7 +39,11 @@ function Dashboard() {
 
           <div className="notification-wrapper">
 
-            <button className="icon-btn">
+            
+            <button
+              className="icon-btn"
+              onClick={() => navigate("/notifications")}
+            >
               🔔
             </button>
 

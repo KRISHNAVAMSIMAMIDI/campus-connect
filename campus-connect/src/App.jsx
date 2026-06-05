@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,6 +7,8 @@ import {
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard";
 import Clubs from "./pages/Clubs";
+import Profile from "./pages/Profile";
+import Notifications from "./pages/Notifications";
 
 function App() {
   return (
@@ -29,6 +29,16 @@ function App() {
         <Route
           path="/clubs"
           element={<Clubs />}
+        />
+
+        <Route
+          path="/profile"
+          element={<Profile />}
+        />
+
+        <Route
+          path="/notifications"
+          element={<Notifications />}
         />
 
       </Routes>
