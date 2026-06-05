@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,6 +11,7 @@ import Events from "./pages/Events";
 import Register from "./pages/Register";
 import Recruitments from "./pages/Recruitments";
 import ApplicationForm from "./ApplicationForm";
+import ClubProfile from "./pages/ClubProfile";
 
 function App() {
   return (
@@ -34,6 +33,7 @@ function App() {
           path="/clubs"
           element={<Clubs />}
         />
+        <Route path="/ClubProfile" element={<ClubProfile />} />
 
         <Route
           path="/events"
