@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ClubCard from "../components/ClubCard";
 import "./Clubs.css";
 
@@ -6,58 +7,36 @@ function Clubs() {
     {
       id: 1,
       name: "Coding Club",
-      description:
-        "Learn programming and participate in hackathons.",
+      description: "Learn programming and participate in hackathons.",
       members: 120,
-      logo:
-        "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+      joined: true,
+      logo: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
     },
     {
       id: 2,
-      name: "Robotics Club",
-      description:
-        "Build robots and IoT projects.",
-      members: 85,
-      logo:
-        "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-    },
-    {
-      id: 3,
       name: "Photography Club",
-      description:
-        "Improve photography skills.",
+      description: "Improve photography skills.",
       members: 60,
-      logo:
-        "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+      joined: true,
+      logo: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
     },
-    {
-      id: 4,
-      name: "Dance Club",
-      description:
-        "Perform and learn dance styles.",
-      members: 90,
-      logo:
-        "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-    },
-    {
-      id: 5,
-      name: "AI Club",
-      description:
-        "Explore AI, ML and Data Science.",
-      members: 110,
-      logo:
-        "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-    },
-    {
-      id: 6,
-      name: "Sports Club",
-      description:
-        "Participate in sports activities.",
-      members: 140,
-      logo:
-        "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-    },
+  
   ];
+
+  const [search, setSearch] = useState("");
+  const [showMyClubs, setShowMyClubs] = useState(false);
+
+  const filteredClubs = clubs.filter((club) => {
+    const matchesSearch = club.name
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+    const matchesMyClubs = showMyClubs
+      ? club.joined
+      : true;
+
+    return matchesSearch && matchesMyClubs;
+  });
 
   return (
     <div className="clubs-page">
@@ -68,21 +47,41 @@ function Clubs() {
           <input
             type="text"
             placeholder="Search Clubs..."
+            value={search}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
           />
 
-          <button>My Clubs</button>
+          <button
+            onClick={() =>
+              setShowMyClubs(!showMyClubs)
+            }
+          >
+            {showMyClubs
+              ? "All Clubs"
+              : "My Clubs"}
+          </button>
         </div>
       </div>
 
-      <h1>Explore Clubs</h1>
+      <h1>
+        {showMyClubs
+          ? "My Clubs"
+          : "Explore Clubs"}
+      </h1>
 
       <div className="clubs-grid">
-        {clubs.map((club) => (
-          <ClubCard
-            key={club.id}
-            club={club}
-          />
-        ))}
+        {filteredClubs.length > 0 ? (
+          filteredClubs.map((club) => (
+            <ClubCard
+              key={club.id}
+              club={club}
+            />
+          ))
+        ) : (
+          <h2>No Clubs Found</h2>
+        )}
       </div>
     </div>
   );

@@ -1,13 +1,22 @@
 import "./ClubCard.css";
+import { useNavigate } from "react-router-dom";
 
 function ClubCard({ club }) {
+  const navigate = useNavigate();
+
   return (
     <div className="club-card">
-      <img
-        src={club.logo}
-        alt={club.name}
-        className="club-logo"
-      />
+      <div className="club-header">
+        <img
+          src={club.logo}
+          alt={club.name}
+          className="club-logo"
+        />
+
+        <div className="club-badge">
+          🔥 Active Club
+        </div>
+      </div>
 
       <h3>{club.name}</h3>
 
@@ -18,12 +27,18 @@ function ClubCard({ club }) {
       </div>
 
       <div className="btn-group">
-        <button className="join-btn">
-          Join
+        <button
+          className="join-btn"
+          onClick={() => alert(`Joined ${club.name}`)}
+        >
+          🚀 Join Now
         </button>
 
-        <button className="explore-btn">
-          Explore
+        <button
+          className="explore-btn"
+          onClick={() => navigate("/ClubProfile")}
+        >
+          🔍 Explore
         </button>
       </div>
     </div>
@@ -31,3 +46,4 @@ function ClubCard({ club }) {
 }
 
 export default ClubCard;
+
