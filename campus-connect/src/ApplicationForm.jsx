@@ -1,18 +1,30 @@
 import React from "react";
-import "./Register.css";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import "./ApplicationForm.css";
 
-function Register() {
-  const navigate = useNavigate();
+function ApplicationForm() {
+
+  const { role } = useParams();
+
   return (
 
-    <div className="register-page">
+    <div className="application-page">
 
-      <form className="register-card">
+      <form className="application-card">
 
-        <h2 className="register-title">
-          Create Account
+        <h2 className="application-title">
+          Application Form
         </h2>
+
+        {/* ROLE */}
+        <div className="selected-role">
+
+          Applying For:
+          <span>
+            {role}
+          </span>
+
+        </div>
 
         {/* NAME */}
         <label>
@@ -64,41 +76,28 @@ function Register() {
           placeholder="1st / 2nd / 3rd / 4th"
         />
 
-        {/* PASSWORD */}
+        {/* SKILLS */}
         <label>
-          Password
+          Skills
         </label>
 
-        <input
-          type="password"
-          placeholder="Enter Password"
-        />
+        <textarea
+          placeholder="Mention your skills..."
+        ></textarea>
 
-        {/* CONFIRM PASSWORD */}
+        {/* WHY JOIN */}
         <label>
-          Confirm Password
+          Why do you want to join?
         </label>
 
-        <input
-          type="password"
-          placeholder="Confirm Password"
-        />
+        <textarea
+          placeholder="Write your motivation..."
+        ></textarea>
 
         {/* BUTTON */}
         <button type="submit">
-          Register
+          Submit Application
         </button>
-
-        {/* FOOTER */}
-        <p className="login-text">
-
-          Already have an account?
-
-          <span onClick={() => navigate("/")}>
-            Login
-          </span>
-
-        </p>
 
       </form>
 
@@ -107,4 +106,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default ApplicationForm;

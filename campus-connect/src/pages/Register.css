@@ -1,0 +1,150 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* PAGE */
+
+.register-page {
+  min-height: 100vh;
+  background-color: #FDFDFD;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+}
+
+/* REGISTER CARD */
+
+.register-card {
+  width: 450px;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  background-color: white;
+
+  padding: 40px;
+
+  border-radius: 28px;
+
+  box-shadow: 0px 12px 35px rgba(0,0,0,0.08);
+
+  border: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+/* TITLE */
+
+.register-title {
+  text-align: center;
+
+  margin-bottom: 30px;
+
+  color: #FF5733;
+
+  font-size: 34px;
+
+  font-weight: 700;
+}
+
+/* LABELS */
+
+.register-card label {
+  display: block;
+
+  margin-top: 12px;
+  margin-bottom: 8px;
+
+  font-size: 15px;
+
+  color: #444;
+
+  font-weight: 600;
+}
+
+/* INPUTS */
+
+.register-card input {
+  width: 100%;
+
+  padding: 13px;
+
+  border: 2px solid rgba(0, 212, 255, 0.25);
+
+  border-radius: 12px;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition: 0.3s;
+
+  margin-bottom: 16px;
+}
+
+.register-card input:focus {
+  border-color: #00D4FF;
+}
+
+/* BUTTON */
+
+.register-card button {
+  width: 100%;
+
+  padding: 15px;
+
+  margin-top: 10px;
+
+  background-color: #FF5733;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 12px;
+
+  font-size: 18px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.register-card button:hover {
+  background-color: #e64a26;
+}
+
+/* FOOTER */
+
+.login-text {
+  margin-top: 22px;
+
+  text-align: center;
+
+  color: #666;
+}
+
+.login-text span {
+  color: #00D4FF;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  margin-left: 5px;
+}
+
+/* SCROLLBAR */
+
+.register-card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.register-card::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 212, 255, 0.4);
+  border-radius: 10px;
+}
