@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { useNavigate, useOutlet } from "react-router-dom";
+import { useLocation, useNavigate, useOutlet } from "react-router-dom";
 import "./Dashboard.css";
 
 function Dashboard() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const outlet = useOutlet();
+  const isClubProfile = location.pathname === "/dashboard/club-profile";
 
   return (
-    <div className="dashboard">
+    <div className={`dashboard${isClubProfile ? " dashboard-scroll-page" : ""}`}>
       {/* HEADER */}
       <header className="header">
         <div className="header-left">
@@ -71,16 +73,52 @@ function Dashboard() {
       <div className="main-container">
         {/* SIDEBAR */}
         <aside className="sidebar">
-          <button onClick={() => navigate("/dashboard")}>Dashboard</button>
 
-          <button onClick={() => navigate("/dashboard/clubs")}>Clubs</button>
+  <button
+    className={
+      location.pathname === "/dashboard"
+        ? "active"
+        : ""
+    }
+    onClick={() => navigate("/dashboard")}
+  >
+    Dashboard
+  </button>
 
-          <button onClick={() => navigate("/dashboard/events")}>Events</button>
+  <button
+    className={
+      location.pathname === "/dashboard/clubs"
+        ? "active"
+        : ""
+    }
+    onClick={() => navigate("/dashboard/clubs")}
+  >
+    Clubs
+  </button>
 
-          <button onClick={() => navigate("/dashboard/recruitments")}>
-            Recruitments
-          </button>
-        </aside>
+  <button
+    className={
+      location.pathname === "/dashboard/events"
+        ? "active"
+        : ""
+    }
+    onClick={() => navigate("/dashboard/events")}
+  >
+    Events
+  </button>
+
+  <button
+    className={
+      location.pathname === "/dashboard/recruitments"
+        ? "active"
+        : ""
+    }
+    onClick={() => navigate("/dashboard/recruitments")}
+  >
+    Recruitments
+  </button>
+
+</aside>
 
         {/* CONTENT */}
         <main className="content">

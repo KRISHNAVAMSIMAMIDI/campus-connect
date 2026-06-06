@@ -4,7 +4,7 @@ function ClubProfile() {
   const club = {
     name: "Coding Club",
 
-    tagline: "Code • Build • Innovate",
+    tagline: "Code | Build | Innovate",
 
     logo:
       "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
@@ -49,7 +49,7 @@ function ClubProfile() {
       "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
     ],
 
-    recruitment: "🟢 Open",
+    recruitment: "Open",
   };
 
   return (

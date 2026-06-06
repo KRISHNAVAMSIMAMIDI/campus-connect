@@ -16,9 +16,9 @@ function ClubProfileCard({ club }) {
         </div>
       </div>
 
-      <div className="profile-card">
+      <div className="club-profile-card">
         {/* Header */}
-        <div className="profile-header">
+        <div className="club-profile-header">
           <img
             src={club.logo}
             alt={club.name}
@@ -32,19 +32,19 @@ function ClubProfileCard({ club }) {
         </div>
 
         {/* About */}
-        <section>
+        <section className="club-profile-section">
           <h3>About Club</h3>
           <p>{club.about}</p>
         </section>
 
         {/* Vision */}
-        <section>
+        <section className="club-profile-section">
           <h3>Vision</h3>
           <p>{club.vision}</p>
         </section>
 
         {/* Mission */}
-        <section>
+        <section className="club-profile-section">
           <h3>Mission</h3>
 
           <ul>
@@ -55,14 +55,14 @@ function ClubProfileCard({ club }) {
         </section>
 
         {/* Faculty */}
-        <section>
+        <section className="club-profile-section">
           <h3>Faculty Coordinator</h3>
           <p>{club.faculty}</p>
         </section>
 
         {/* Side by Side */}
-        <div className="two-column">
-          <section>
+        <div className="club-profile-two-column">
+          <section className="club-profile-section">
             <h3>Core Team</h3>
 
             <ul>
@@ -72,7 +72,7 @@ function ClubProfileCard({ club }) {
             </ul>
           </section>
 
-          <section>
+          <section className="club-profile-section">
             <h3>Current Events</h3>
 
             <ul>
@@ -84,35 +84,35 @@ function ClubProfileCard({ club }) {
         </div>
 
         {/* Recruitment */}
-        <section>
+        <section className="club-profile-section">
           <h3>Recruitment Status</h3>
 
-          <p className="open-status">
+          <p className="club-profile-open-status">
             {club.recruitment}
           </p>
         </section>
 
         {/* Gallery */}
-        <section>
+        <section className="club-profile-section">
           <h3>Gallery</h3>
 
-          <div className="gallery-grid">
+          <div className="club-profile-gallery-grid">
             {club.gallery.map((image, index) => (
               <img
                 key={index}
                 src={image}
                 alt={`Gallery ${index}`}
-                className="gallery-image"
+                className="club-profile-gallery-image"
               />
             ))}
           </div>
         </section>
 
         {/* Social */}
-        <section>
+        <section className="club-profile-section">
           <h3>Social Links</h3>
 
-          <div className="social-links">
+          <div className="club-profile-social-links">
             <a href="/">Instagram</a>
             <a href="/">LinkedIn</a>
             <a href="/">GitHub</a>
@@ -120,11 +120,9 @@ function ClubProfileCard({ club }) {
         </section>
 
         {/* Buttons */}
-        <div className="action-buttons">
+        <div className="club-profile-action-buttons">
           <button>Apply To Join</button>
-          <button>Register Event</button>
           <button>Message Club</button>
-          <button>Follow Updates</button>
         </div>
       </div>
     </>

@@ -37,38 +37,42 @@ body {
 .profile-page {
   min-height: 100vh;
   background: var(--background);
-  padding-bottom: 40px;
+  padding: 0 20px 40px;
 }
 
 /* =========================
    HEADER
 ========================= */
 
-.profile-header {
-  position: sticky;
+.profile-page .profile-header {
+  position: relative;
   top: 0;
-  z-index: 1000;
+  z-index: 2;
 
   display: flex;
   align-items: center;
   gap: 20px;
 
-  padding: 18px 30px;
+  max-width: 1200px;
+  margin: 0 auto 32px;
+  padding: 20px 28px;
 
   background: white;
 
+  border: 1px solid var(--border);
   border-bottom: 3px solid var(--accent);
+  border-radius: 16px;
 
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
-.profile-header h1 {
+.profile-page .profile-header h1 {
   font-size: 30px;
   font-weight: 800;
   color: var(--text-dark);
 }
 
-.profile-header .back-btn {
+.profile-page .profile-header .back-btn {
   background: var(--primary);
 
   color: white;
@@ -88,7 +92,7 @@ body {
   transition: 0.3s;
 }
 
-.profile-header .back-btn:hover {
+.profile-page .profile-header .back-btn:hover {
   background: var(--primary-dark);
   transform: scale(1.05);
 }
@@ -97,17 +101,19 @@ body {
    CONTAINER
 ========================= */
 
-.profile-container {
+.profile-page .profile-container {
   max-width: 1200px;
-  margin: 30px auto;
-  padding: 0 20px;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+  z-index: 1;
 }
 
 /* =========================
    PROFILE CARD
 ========================= */
 
-.profile-card {
+.profile-page .profile-card {
   background: var(--card-bg);
 
   border-radius: 20px;
@@ -119,6 +125,7 @@ body {
   border: 1px solid var(--border);
 
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  position: relative;
 }
 
 .profile-header-section {
@@ -693,18 +700,19 @@ body {
     font-size: 26px;
   }
 
-  .profile-header h1 {
+  .profile-page .profile-header h1 {
     font-size: 24px;
   }
 }
 
 @media (max-width: 480px) {
 
-  .profile-header {
+  .profile-page .profile-header {
     padding: 15px;
+    border-radius: 12px;
   }
 
-  .profile-card,
+  .profile-page .profile-card,
   .joined-clubs-section,
   .account-section {
     padding: 20px;
