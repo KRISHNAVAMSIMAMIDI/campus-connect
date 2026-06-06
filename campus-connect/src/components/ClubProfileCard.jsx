@@ -1,133 +1,339 @@
 import "./ClubProfileCard.css";
 import { useNavigate } from "react-router-dom";
 
-function ClubProfileCard({ club }) {
+function ClubProfileCard({
+  club,
+  isAdmin
+}) {
+
   const navigate = useNavigate();
 
   return (
     <>
-      {/* Banner */}
+
+      {/* BANNER */}
       <div
         className="club-banner"
         style={{
           backgroundImage: `url(${club.banner})`,
         }}
       >
+
         <div className="banner-overlay">
+
           <h1>{club.name}</h1>
+
           <p>{club.tagline}</p>
+
+          {isAdmin && (
+
+            <div className="banner-buttons">
+
+              <button className="edit-btn">
+                Change Banner
+              </button>
+
+              <button className="edit-btn">
+                Change Logo
+              </button>
+
+            </div>
+
+          )}
+
         </div>
+
       </div>
 
+      {/* PROFILE CARD */}
       <div className="profile-card">
-        {/* Header */}
-        <div className="profile-header">
-          <img
-            src={club.logo}
-            alt={club.name}
-            className="club-logo"
-          />
 
-          <div>
-            <h2>{club.name}</h2>
-            <p>{club.tagline}</p>
-          </div>
-        </div>
-
-        {/* About */}
+        {/* ABOUT */}
         <section>
+
           <h3>About Club</h3>
-          <p>{club.about}</p>
+
+          {isAdmin ? (
+
+            <textarea
+              defaultValue={club.about}
+              className="edit-textarea"
+            />
+
+          ) : (
+
+            <p>{club.about}</p>
+
+          )}
+
         </section>
 
-        {/* Vision */}
+        {/* VISION */}
         <section>
+
           <h3>Vision</h3>
-          <p>{club.vision}</p>
+
+          {isAdmin ? (
+
+            <textarea
+              defaultValue={club.vision}
+              className="edit-textarea"
+            />
+
+          ) : (
+
+            <p>{club.vision}</p>
+
+          )}
+
         </section>
 
-        {/* Mission */}
+        {/* FACULTY */}
         <section>
-          <h3>Mission</h3>
 
-          <ul>
-            {club.mission.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Faculty */}
-        <section>
           <h3>Faculty Coordinator</h3>
-          <p>{club.faculty}</p>
+
+          {isAdmin ? (
+
+            <input
+              type="text"
+              defaultValue={club.faculty}
+              className="edit-input"
+            />
+
+          ) : (
+
+            <p>{club.faculty}</p>
+
+          )}
+
         </section>
 
-        {/* Side by Side */}
-        <div className="two-column">
-          <section>
-            <h3>Core Team</h3>
-
-            <ul>
-              {club.team.map((member, index) => (
-                <li key={index}>{member}</li>
-              ))}
-            </ul>
-          </section>
-
-          <section>
-            <h3>Current Events</h3>
-
-            <ul>
-              {club.events.map((event, index) => (
-                <li key={index}>{event}</li>
-              ))}
-            </ul>
-          </section>
-        </div>
-
-        {/* Recruitment */}
+        {/* TEAM */}
         <section>
+
+          <h3>Core Team</h3>
+
+          {club.team.map((member, index) => (
+
+            <div
+              key={index}
+              className="editable-row"
+            >
+
+              {isAdmin ? (
+
+                <>
+                  <input
+                    type="text"
+                    defaultValue={member}
+                    className="edit-input"
+                  />
+
+                  <button className="delete-small">
+                    Delete
+                  </button>
+                </>
+
+              ) : (
+
+                <p>{member}</p>
+
+              )}
+
+            </div>
+
+          ))}
+
+          {isAdmin && (
+            <button className="add-btn">
+              + Add Team Member
+            </button>
+          )}
+
+        </section>
+
+        {/* EVENTS */}
+        <section>
+
+          <h3>Current Events</h3>
+
+          {club.events.map((event, index) => (
+
+            <div
+              key={index}
+              className="editable-row"
+            >
+
+              {isAdmin ? (
+
+                <>
+                  <input
+                    type="text"
+                    defaultValue={event}
+                    className="edit-input"
+                  />
+
+                  <button className="delete-small">
+                    Delete
+                  </button>
+                </>
+
+              ) : (
+
+                <p>{event}</p>
+
+              )}
+
+            </div>
+
+          ))}
+
+          {isAdmin && (
+            <button className="add-btn">
+              + Add Event
+            </button>
+          )}
+
+        </section>
+
+        {/* RECRUITMENT */}
+        <section>
+
           <h3>Recruitment Status</h3>
 
-          <p className="open-status">
-            {club.recruitment}
-          </p>
+          {isAdmin ? (
+
+            <label className="toggle-container">
+
+              <input type="checkbox" defaultChecked />
+
+              <span className="toggle-slider"></span>
+
+            </label>
+
+          ) : (
+
+            <p className="open-status">
+              {club.recruitment}
+            </p>
+
+          )}
+
         </section>
 
-        {/* Gallery */}
+        {/* GALLERY */}
         <section>
+
           <h3>Gallery</h3>
 
           <div className="gallery-grid">
+
             {club.gallery.map((image, index) => (
-              <img
+
+              <div
                 key={index}
-                src={image}
-                alt={`Gallery ${index}`}
-                className="gallery-image"
-              />
+                className="gallery-item"
+              >
+
+                <img
+                  src={image}
+                  alt={`Gallery ${index}`}
+                  className="gallery-image"
+                />
+
+                {isAdmin && (
+                  <button className="delete-btn">
+                    Delete
+                  </button>
+                )}
+
+              </div>
+
             ))}
+
           </div>
+
+          {isAdmin && (
+            <button className="upload-btn">
+              Upload Image
+            </button>
+          )}
+
         </section>
 
-        {/* Social */}
+        {/* SOCIAL LINKS */}
         <section>
+
           <h3>Social Links</h3>
 
-          <div className="social-links">
-            <a href="/">Instagram</a>
-            <a href="/">LinkedIn</a>
-            <a href="/">GitHub</a>
-          </div>
+          {isAdmin ? (
+
+            <div className="social-edit">
+
+              <input
+                type="text"
+                placeholder="Instagram URL"
+                className="edit-input"
+              />
+
+              <input
+                type="text"
+                placeholder="LinkedIn URL"
+                className="edit-input"
+              />
+
+            </div>
+
+          ) : (
+
+            <div className="social-links">
+
+              <a href="/">
+                Instagram
+              </a>
+
+              <a href="/">
+                LinkedIn
+              </a>
+
+            </div>
+
+          )}
+
         </section>
 
-        {/* Buttons */}
+        {/* ACTION BUTTONS */}
         <div className="action-buttons">
-          <button onClick={() => navigate("/apply/event-registration")}>Apply To Join</button>
-          <button onClick={() => navigate("/message")}>Message Club</button>
+
+          <button
+            onClick={() =>
+              navigate("/apply/event-registration")
+            }
+          >
+            Apply To Join
+          </button>
+
+          <button
+            onClick={() =>
+              navigate("/message")
+            }
+          >
+            Message Club
+          </button>
+
+          {isAdmin && (
+
+            <button className="save-btn">
+              Save Changes
+            </button>
+
+          )}
+
         </div>
+
       </div>
+
     </>
   );
 }

@@ -14,6 +14,7 @@ import Recruitments from "./pages/Recruitments";
 import ApplicationForm from "./pages/ApplicationForm";
 import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
+import ClubAdmin from "./pages/ClubAdmin";
 
 
 function App() {
@@ -102,6 +103,10 @@ function App() {
         <Route
           path="/notifications"
           element={<Notifications />}
+        />
+        <Route
+          path="/club-admin"
+          element={<ClubAdmin />}
         />
 
       </Routes>

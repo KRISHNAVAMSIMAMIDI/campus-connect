@@ -3,6 +3,7 @@ import ClubProfileCard from "../components/ClubProfileCard";
 function ClubProfile() {
 
   const club = {
+
     name: "Coding Club",
 
     tagline: "Code • Build • Innovate",
@@ -54,6 +55,7 @@ function ClubProfile() {
   };
 
   return (
+
     <div
       style={{
         background: "#FDFDFD",
@@ -61,8 +63,14 @@ function ClubProfile() {
         paddingBottom: "40px",
       }}
     >
-      <ClubProfileCard club={club} />
+
+      <ClubProfileCard
+        club={club}
+        isAdmin={false}
+      />
+
     </div>
+
   );
 }
 

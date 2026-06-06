@@ -1,0 +1,336 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* PAGE LAYOUT */
+
+.admin-page {
+  height: 100vh;
+
+  display: flex;
+
+  overflow: hidden;
+
+  background-color: #FDFDFD;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+  width: 260px;
+
+  background-color: #FF5733;
+
+  padding: 30px 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+
+  flex-shrink: 0;
+}
+
+.logo {
+  color: white;
+
+  margin-bottom: 25px;
+
+  text-align: center;
+
+  font-size: 30px;
+
+  font-weight: bold;
+}
+
+.sidebar button {
+  background: white;
+
+  color: #FF5733;
+
+  border: none;
+
+  padding: 14px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  text-align: left;
+
+  transition: 0.3s;
+}
+
+.sidebar button:hover {
+  background: #00D4FF;
+
+  color: white;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content {
+  flex: 1;
+
+  padding: 40px;
+
+  overflow-y: auto;
+}
+
+.main-content h1 {
+  color: #FF5733;
+
+  margin-bottom: 30px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 25px;
+}
+
+.stat-card {
+  background: white;
+
+  padding: 30px;
+
+  border-radius: 20px;
+
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.08);
+
+  text-align: center;
+}
+
+.stat-card h2 {
+  color: #00D4FF;
+
+  font-size: 40px;
+
+  margin-bottom: 10px;
+}
+
+.stat-card p {
+  color: #555;
+
+  font-size: 18px;
+}
+
+/* =========================
+   FORMS
+========================= */
+
+.form-section {
+  max-width: 700px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.form-section input,
+.form-section textarea {
+  padding: 15px;
+
+  border: 2px solid rgba(0,212,255,0.25);
+
+  border-radius: 12px;
+
+  font-size: 16px;
+
+  outline: none;
+}
+
+.form-section input:focus,
+.form-section textarea:focus {
+  border-color: #00D4FF;
+}
+
+.form-section textarea {
+  min-height: 140px;
+
+  resize: none;
+}
+
+.form-section button {
+  background: #FF5733;
+
+  color: white;
+
+  border: none;
+
+  padding: 15px;
+
+  border-radius: 12px;
+
+  font-size: 17px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.form-section button:hover {
+  background: #e64a26;
+}
+
+/* =========================
+   APPLICATION CARDS
+========================= */
+
+.application-card {
+  background: white;
+
+  padding: 28px;
+
+  border-radius: 20px;
+
+  margin-bottom: 25px;
+
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.08);
+}
+
+.application-card h2 {
+  color: #222;
+
+  margin-bottom: 12px;
+}
+
+.application-card p {
+  color: #555;
+
+  margin-bottom: 10px;
+
+  line-height: 1.7;
+}
+
+/* =========================
+   DETAILS BOX
+========================= */
+
+.details-box {
+  margin-top: 20px;
+
+  padding: 20px;
+
+  background: #f9f9f9;
+
+  border-radius: 14px;
+}
+
+/* =========================
+   APPLICATION BUTTONS
+========================= */
+
+.application-buttons {
+  display: flex;
+
+  gap: 15px;
+
+  margin-top: 25px;
+
+  flex-wrap: wrap;
+}
+
+.approve {
+  background: #4CAF50;
+
+  color: white;
+
+  border: none;
+
+  padding: 12px 18px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.approve:hover {
+  background: #3f9c43;
+}
+
+.reject {
+  background: #f44336;
+
+  color: white;
+
+  border: none;
+
+  padding: 12px 18px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.reject:hover {
+  background: #d9362b;
+}
+
+.details-btn {
+  background: #00D4FF;
+
+  color: white;
+
+  border: none;
+
+  padding: 12px 18px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.details-btn:hover {
+  background: #00b5d9;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .admin-page {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+
+    flex-direction: row;
+
+    overflow-x: auto;
+  }
+
+  .main-content {
+    padding: 25px;
+  }
+}
