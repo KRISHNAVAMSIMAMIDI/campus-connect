@@ -14,7 +14,8 @@ import Recruitments from "./pages/Recruitments";
 import ApplicationForm from "./pages/ApplicationForm";
 import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
-
+import SuperAdminDashboard from "./pages/SuperAdminDashboard";
+import Messages from "./pages/Messages";
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
         <Route
           path="/"
           element={<Login />}
+        />
+        <Route 
+          path="/messages"
+          element={<Messages />}
         />
 
         <Route
@@ -66,6 +71,11 @@ function App() {
             element={<Notifications />}
           />
         </Route>
+        
+        <Route
+          path="/super-admin"
+          element={<SuperAdminDashboard />}
+        />  
 
         <Route
           path="/clubs"
@@ -103,6 +113,8 @@ function App() {
           path="/notifications"
           element={<Notifications />}
         />
+
+      
 
       </Routes>
 
