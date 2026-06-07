@@ -316,7 +316,7 @@ function ClubProfileCard({
 
           <button
             onClick={() =>
-              navigate("/message")
+              navigate("/messages")
             }
           >
             Message Club

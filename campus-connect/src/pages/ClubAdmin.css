@@ -1,64 +1,65 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* PAGE LAYOUT */
-
 .admin-page {
-  height: 100vh;
-
   display: flex;
 
-  overflow: hidden;
+  height: 100vh;
 
   background-color: #FDFDFD;
+
+  overflow: hidden;
 }
 
 /* =========================
    SIDEBAR
 ========================= */
 
-.sidebar {
+.admin-page .sidebar {
+  position: fixed;
+
+  top: 0;
+
+  left: 0;
+
   width: 260px;
 
-  background-color: #FF5733;
+  height: 100vh;
+
+  background: #FF5733;
 
   padding: 30px 20px;
 
   display: flex;
+
   flex-direction: column;
 
   gap: 18px;
 
-  flex-shrink: 0;
+  overflow-y: auto;
+
+  z-index: 1000;
 }
 
-.logo {
+.admin-page .logo {
   color: white;
 
-  margin-bottom: 25px;
-
-  text-align: center;
-
-  font-size: 30px;
+  font-size: 34px;
 
   font-weight: bold;
+
+  line-height: 1.2;
+
+  margin-bottom: 25px;
 }
 
-.sidebar button {
+.admin-page .sidebar button {
   background: white;
 
   color: #FF5733;
 
   border: none;
 
-  padding: 14px;
+  padding: 15px 18px;
 
   border-radius: 12px;
-
-  cursor: pointer;
 
   font-size: 16px;
 
@@ -66,38 +67,50 @@
 
   text-align: left;
 
+  cursor: pointer;
+
   transition: 0.3s;
 }
 
-.sidebar button:hover {
+.admin-page .sidebar button:hover {
   background: #00D4FF;
 
   color: white;
+
+  transform: translateX(4px);
 }
 
 /* =========================
    MAIN CONTENT
 ========================= */
 
-.main-content {
-  flex: 1;
+.admin-page .main-content {
+  margin-left: 260px;
+
+  width: calc(100% - 260px);
+
+  height: 100vh;
+
+  overflow-y: auto;
 
   padding: 40px;
 
-  overflow-y: auto;
+  background: #FDFDFD;
 }
 
-.main-content h1 {
+.admin-page .main-content h1 {
   color: #FF5733;
+
+  font-size: 42px;
 
   margin-bottom: 30px;
 }
 
 /* =========================
-   STATS
+   STATS GRID
 ========================= */
 
-.stats-grid {
+.admin-page .stats-grid {
   display: grid;
 
   grid-template-columns:
@@ -106,19 +119,26 @@
   gap: 25px;
 }
 
-.stat-card {
+.admin-page .stat-card {
   background: white;
 
   padding: 30px;
 
   border-radius: 20px;
 
-  box-shadow: 0px 5px 15px rgba(0,0,0,0.08);
+  box-shadow:
+    0px 5px 15px rgba(0,0,0,0.08);
 
   text-align: center;
+
+  transition: 0.3s;
 }
 
-.stat-card h2 {
+.admin-page .stat-card:hover {
+  transform: translateY(-4px);
+}
+
+.admin-page .stat-card h2 {
   color: #00D4FF;
 
   font-size: 40px;
@@ -126,7 +146,7 @@
   margin-bottom: 10px;
 }
 
-.stat-card p {
+.admin-page .stat-card p {
   color: #555;
 
   font-size: 18px;
@@ -136,7 +156,9 @@
    FORMS
 ========================= */
 
-.form-section {
+.admin-page .form-section {
+  width: 100%;
+
   max-width: 700px;
 
   display: flex;
@@ -146,8 +168,10 @@
   gap: 18px;
 }
 
-.form-section input,
-.form-section textarea {
+.admin-page .form-section input,
+.admin-page .form-section textarea {
+  width: 100%;
+
   padding: 15px;
 
   border: 2px solid rgba(0,212,255,0.25);
@@ -157,20 +181,24 @@
   font-size: 16px;
 
   outline: none;
+
+  background: white;
+
+  transition: 0.3s;
 }
 
-.form-section input:focus,
-.form-section textarea:focus {
+.admin-page .form-section input:focus,
+.admin-page .form-section textarea:focus {
   border-color: #00D4FF;
 }
 
-.form-section textarea {
-  min-height: 140px;
+.admin-page .form-section textarea {
+  min-height: 160px;
 
   resize: none;
 }
 
-.form-section button {
+.admin-page .form-section button {
   background: #FF5733;
 
   color: white;
@@ -190,7 +218,7 @@
   transition: 0.3s;
 }
 
-.form-section button:hover {
+.admin-page .form-section button:hover {
   background: #e64a26;
 }
 
@@ -198,7 +226,7 @@
    APPLICATION CARDS
 ========================= */
 
-.application-card {
+.admin-page .application-card {
   background: white;
 
   padding: 28px;
@@ -207,28 +235,39 @@
 
   margin-bottom: 25px;
 
-  box-shadow: 0px 5px 15px rgba(0,0,0,0.08);
+  box-shadow:
+    0px 5px 15px rgba(0,0,0,0.08);
+
+  transition: 0.3s;
 }
 
-.application-card h2 {
+.admin-page .application-card:hover {
+  transform: translateY(-3px);
+}
+
+.admin-page .application-card h2 {
   color: #222;
 
   margin-bottom: 12px;
+
+  font-size: 28px;
 }
 
-.application-card p {
+.admin-page .application-card p {
   color: #555;
 
   margin-bottom: 10px;
 
   line-height: 1.7;
+
+  font-size: 16px;
 }
 
 /* =========================
    DETAILS BOX
 ========================= */
 
-.details-box {
+.admin-page .details-box {
   margin-top: 20px;
 
   padding: 20px;
@@ -236,13 +275,15 @@
   background: #f9f9f9;
 
   border-radius: 14px;
+
+  border-left: 5px solid #00D4FF;
 }
 
 /* =========================
-   APPLICATION BUTTONS
+   BUTTONS
 ========================= */
 
-.application-buttons {
+.admin-page .application-buttons {
   display: flex;
 
   gap: 15px;
@@ -252,11 +293,9 @@
   flex-wrap: wrap;
 }
 
-.approve {
-  background: #4CAF50;
-
-  color: white;
-
+.admin-page .approve,
+.admin-page .reject,
+.admin-page .details-btn {
   border: none;
 
   padding: 12px 18px;
@@ -265,72 +304,56 @@
 
   cursor: pointer;
 
+  color: white;
+
+  font-weight: 600;
+
+  font-size: 15px;
+
   transition: 0.3s;
 }
 
-.approve:hover {
+.admin-page .approve {
+  background: #4CAF50;
+}
+
+.admin-page .approve:hover {
   background: #3f9c43;
 }
 
-.reject {
+.admin-page .reject {
   background: #f44336;
-
-  color: white;
-
-  border: none;
-
-  padding: 12px 18px;
-
-  border-radius: 10px;
-
-  cursor: pointer;
-
-  transition: 0.3s;
 }
 
-.reject:hover {
+.admin-page .reject:hover {
   background: #d9362b;
 }
 
-.details-btn {
+.admin-page .details-btn {
   background: #00D4FF;
-
-  color: white;
-
-  border: none;
-
-  padding: 12px 18px;
-
-  border-radius: 10px;
-
-  cursor: pointer;
-
-  transition: 0.3s;
 }
 
-.details-btn:hover {
+.admin-page .details-btn:hover {
   background: #00b5d9;
 }
 
 /* =========================
-   RESPONSIVE
+   SCROLLBAR
 ========================= */
 
-@media (max-width: 900px) {
+.admin-page .main-content::-webkit-scrollbar,
+.admin-page .sidebar::-webkit-scrollbar {
+  width: 8px;
+}
 
-  .admin-page {
-    flex-direction: column;
-  }
+.admin-page .main-content::-webkit-scrollbar-thumb,
+.admin-page .sidebar::-webkit-scrollbar-thumb {
+  background: #00D4FF;
 
-  .sidebar {
-    width: 100%;
+  border-radius: 20px;
+}
 
-    flex-direction: row;
-
-    overflow-x: auto;
-  }
-
-  .main-content {
-    padding: 25px;
-  }
+.admin-page .main-content::-webkit-scrollbar-track,
+.admin-page .sidebar::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }

@@ -119,8 +119,6 @@ function App() {
           element={<ClubAdmin />}
         />
 
-      
-
       </Routes>
 
     </Router>
