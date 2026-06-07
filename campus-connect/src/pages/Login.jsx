@@ -44,6 +44,29 @@ function Login() {
             Login
           </h2>
 
+          <div className="input-group">
+
+            <label>
+              Select Role
+            </label>
+
+            <select>
+
+              <option value="student">
+                Student
+              </option>
+
+              <option value="club-admin">
+                Club Admin
+              </option>
+
+              <option value="event-organizer">
+                Event Organizer
+              </option>
+
+            </select>
+
+          </div>
           <label>
             College Email
           </label>

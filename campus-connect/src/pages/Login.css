@@ -139,3 +139,45 @@
   cursor: pointer;
   margin-left: 5px;
 }
+
+.input-group {
+  margin-bottom: 22px;
+}
+
+.input-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  color: #555;
+}
+
+.input-group select {
+  width: 100%;
+
+  padding: 14px 16px;
+
+  border: 2px solid #f4a688;
+
+  border-radius: 12px;
+
+  outline: none;
+
+  font-size: 16px;
+
+  background-color: white;
+
+  color: #555;
+
+  transition: 0.3s;
+
+  appearance: none;
+}
+
+.input-group select:focus {
+  border-color: #00D4FF;
+}
