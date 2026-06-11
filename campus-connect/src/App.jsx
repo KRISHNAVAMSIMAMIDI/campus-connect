@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
 import ClubAdmin from "./pages/ClubAdmin";
 import SuperAdminDashboard from "./pages/SuperAdminDashboard";
+import EventOrganizerDashboard from "./pages/EventOrganizerDashboard";
 import Messages from "./pages/Messages";
 
 function App() {
@@ -76,7 +77,12 @@ function App() {
         <Route
           path="/super-admin"
           element={<SuperAdminDashboard />}
-        />  
+        />
+
+        <Route
+          path="/event-organizer"
+          element={<EventOrganizerDashboard />}
+        />
 
         <Route
           path="/clubs"
