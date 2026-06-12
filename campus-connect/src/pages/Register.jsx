@@ -1,109 +1,122 @@
-import React from "react";
+import { useState } from "react";
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../services/api";// adjust path if needed
 
 function Register() {
   const navigate = useNavigate();
-  return (
 
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (form.password !== form.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const response = await registerUser({
+        name: form.name,
+        email: form.email,
+        password: form.password
+      });
+
+      console.log(response.data);
+
+      alert("Registration Successful!");
+
+      // Go to Login Page
+      navigate("/");
+
+    } catch (error) {
+
+      console.error(error);
+
+      if (error.response) {
+        alert(error.response.data.message || "Registration Failed");
+      } else {
+        alert("Server Error");
+      }
+    }
+  };
+
+  return (
     <div className="register-page">
 
-      <form className="register-card">
+      <form className="register-card" onSubmit={handleSubmit}>
 
         <h2 className="register-title">
           Create Account
         </h2>
 
-        {/* NAME */}
-        <label>
-          Full Name
-        </label>
-
+        <label>Full Name</label>
         <input
           type="text"
+          name="name"
           placeholder="Enter Full Name"
+          value={form.name}
+          onChange={handleChange}
+          required
         />
 
-        {/* EMAIL */}
-        <label>
-          College Email
-        </label>
-
+        <label>Email</label>
         <input
           type="email"
-          placeholder="student@gvp.edu"
+          name="email"
+          placeholder="Enter Email"
+          value={form.email}
+          onChange={handleChange}
+          required
         />
 
-        {/* ROLL NUMBER */}
-        <label>
-          Roll Number
-        </label>
-
-        <input
-          type="text"
-          placeholder="Enter Roll Number"
-        />
-
-        {/* DEPARTMENT */}
-        <label>
-          Department
-        </label>
-
-        <input
-          type="text"
-          placeholder="CSE / ECE / IT"
-        />
-
-        {/* YEAR */}
-        <label>
-          Year
-        </label>
-
-        <input
-          type="text"
-          placeholder="1st / 2nd / 3rd / 4th"
-        />
-
-        {/* PASSWORD */}
-        <label>
-          Password
-        </label>
-
+        <label>Password</label>
         <input
           type="password"
+          name="password"
           placeholder="Enter Password"
+          value={form.password}
+          onChange={handleChange}
+          required
         />
 
-        {/* CONFIRM PASSWORD */}
-        <label>
-          Confirm Password
-        </label>
-
+        <label>Confirm Password</label>
         <input
           type="password"
+          name="confirmPassword"
           placeholder="Confirm Password"
+          value={form.confirmPassword}
+          onChange={handleChange}
+          required
         />
 
-        {/* BUTTON */}
         <button type="submit">
           Register
         </button>
 
-        {/* FOOTER */}
         <p className="login-text">
-
           Already have an account?
-
           <span onClick={() => navigate("/")}>
             Login
           </span>
-
         </p>
 
       </form>
 
     </div>
-
   );
 }
 
