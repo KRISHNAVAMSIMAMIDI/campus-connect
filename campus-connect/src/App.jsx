@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Clubs from "./pages/Clubs";
 import ClubProfile from "./pages/ClubProfile";
 import Events from "./pages/Events";
+import EventDetails from "./pages/EventDetails";
 import Register from "./pages/Register";
 import Recruitments from "./pages/Recruitments";
 import ApplicationForm from "./pages/ApplicationForm";
@@ -93,6 +94,11 @@ function App() {
         <Route
           path="/events"
           element={<Events />}
+        />
+
+        <Route
+          path="/events/:id"
+          element={<EventDetails />}
         />
 
         <Route
