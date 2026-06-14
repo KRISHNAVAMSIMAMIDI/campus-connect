@@ -89,7 +89,10 @@ function App() {
           path="/clubs"
           element={<Clubs />}
         />
-        <Route path="/ClubProfile" element={<ClubProfile />} />
+        <Route
+          path="/clubs/:id"
+          element={<ClubProfile />}
+        />
 
         <Route
           path="/events"

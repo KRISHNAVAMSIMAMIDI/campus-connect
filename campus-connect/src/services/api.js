@@ -25,5 +25,20 @@ export const getAllEvents = () => {
 export const getEventById = (id) => {
   return API.get(`/events/${id}`);
 };
+export const getAllClubs = () => {
+  return API.get("/clubs");
+};
+
+export const getClubById = (id) => {
+  return API.get(`/clubs/${id}`);
+};
+//join club
+export const joinClub = (data) => {
+  return API.post("/memberships", data);
+};
+
+export const getUserClubs = (userId) => {
+  return API.get(`/memberships/user/${userId}`);
+};
 
 export default API;

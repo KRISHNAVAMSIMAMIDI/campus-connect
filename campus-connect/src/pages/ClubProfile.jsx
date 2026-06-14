@@ -1,58 +1,70 @@
-import ClubProfileCard from "../components/ClubProfileCard";
+import { useEffect, useState } from "react";
+
+import { useParams }
+from "react-router-dom";
+
+import ClubProfileCard
+from "../components/ClubProfileCard";
+
+import {
+  getClubById
+}
+from "../services/api";
 
 function ClubProfile() {
 
-  const club = {
+  const { id } = useParams();
 
-    name: "Coding Club",
+  const [club, setClub] =
+    useState(null);
 
-    tagline: "Code | Build | Innovate",
+  useEffect(() => {
 
-    logo:
-      "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+    const loadClub = async () => {
 
-    banner:
-      "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
+      try {
 
-    about:
-      "Coding Club helps students learn programming, web development, competitive coding and software engineering through workshops and projects.",
+        const response =
+          await getClubById(id);
 
-    vision:
-      "To build a strong technical community that inspires innovation and problem-solving.",
+        setClub(
+          response.data
+        );
 
-    mission: [
-      "Conduct technical workshops",
-      "Organize coding contests",
-      "Build real-world projects",
-      "Prepare students for hackathons",
-    ],
+      } catch (error) {
 
-    faculty: "Dr. Srinivas Rao",
+        console.error(
+          error
+        );
 
-    team: [
-      "President - Jayaram",
-      "Vice President - Sai",
-      "Technical Lead - Charan",
-      "Design Lead - Karthik",
-      "Content Lead - Harsha",
-    ],
+      }
 
-    events: [
-      "Web Development Bootcamp",
-      "DSA Workshop",
-      "Hackathon 2026",
-      "Git & GitHub Session",
-    ],
+    };
 
-    gallery: [
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
-      "https://images.unsplash.com/photo-1515169067868-5387ec356754",
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
-    ],
+    loadClub();
 
-    recruitment: "Open",
-  };
+  }, [id]);
+
+  if (!club) {
+
+    return (
+
+      <div
+        style={{
+          padding: "40px",
+          textAlign: "center"
+        }}
+      >
+
+        <h2>
+          Loading Club...
+        </h2>
+
+      </div>
+
+    );
+
+  }
 
   return (
 
@@ -72,6 +84,7 @@ function ClubProfile() {
     </div>
 
   );
+
 }
 
 export default ClubProfile;
