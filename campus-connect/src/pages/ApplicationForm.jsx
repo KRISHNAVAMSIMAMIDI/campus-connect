@@ -1,101 +1,180 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import {
+  useState
+} from "react";
+
+import {
+  useParams,
+  useNavigate
+} from "react-router-dom";
+
 import "./ApplicationForm.css";
+
+import {
+  submitApplication
+} from "../services/api";
 
 function ApplicationForm() {
 
-  const { role } = useParams();
+  const { id } = useParams();
+
+  const navigate = useNavigate();
+
+  const [formData, setFormData] =
+    useState({
+
+      studentName: "",
+
+      email: "",
+
+      department: "",
+
+      year: "",
+
+      reason: ""
+
+    });
+
+  const handleChange = (e) => {
+
+    setFormData({
+
+      ...formData,
+
+      [e.target.name]:
+        e.target.value
+
+    });
+
+  };
+
+  const handleSubmit = async (e) => {
+
+    e.preventDefault();
+
+    try {
+
+      const user =
+        JSON.parse(
+          localStorage.getItem(
+            "user"
+          )
+        );
+
+      await submitApplication({
+
+        recruitmentId:
+          Number(id),
+
+        userId:
+          user?.id,
+
+        studentName:
+          formData.studentName,
+
+        email:
+          formData.email,
+
+        department:
+          formData.department,
+
+        year:
+          formData.year,
+
+        reason:
+          formData.reason,
+
+        status:
+          "PENDING"
+
+      });
+
+      alert(
+        "Application Submitted Successfully"
+      );
+
+      navigate(
+        "/dashboard/recruitments"
+      );
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert(
+        "Failed To Submit"
+      );
+
+    }
+
+  };
 
   return (
 
     <div className="application-page">
 
-      <form className="application-card">
+      <form
+        className="application-card"
+        onSubmit={
+          handleSubmit
+        }
+      >
 
         <h2 className="application-title">
           Application Form
         </h2>
 
-        {/* ROLE */}
-        <div className="selected-role">
-
-          Applying For:
-          <span>
-            {role}
-          </span>
-
-        </div>
-
-        {/* NAME */}
-        <label>
-          Full Name
-        </label>
-
         <input
           type="text"
-          placeholder="Enter Full Name"
+          name="studentName"
+          placeholder="Full Name"
+          onChange={
+            handleChange
+          }
+          required
         />
-
-        {/* EMAIL */}
-        <label>
-          College Email
-        </label>
 
         <input
           type="email"
-          placeholder="student@gvp.edu"
+          name="email"
+          placeholder="College Email"
+          onChange={
+            handleChange
+          }
+          required
         />
-
-        {/* ROLL NUMBER */}
-        <label>
-          Roll Number
-        </label>
 
         <input
           type="text"
-          placeholder="Enter Roll Number"
+          name="department"
+          placeholder="Department"
+          onChange={
+            handleChange
+          }
+          required
         />
-
-        {/* DEPARTMENT */}
-        <label>
-          Department
-        </label>
 
         <input
           type="text"
-          placeholder="CSE / ECE / IT"
+          name="year"
+          placeholder="Year"
+          onChange={
+            handleChange
+          }
+          required
         />
-
-        {/* YEAR */}
-        <label>
-          Year
-        </label>
-
-        <input
-          type="text"
-          placeholder="1st / 2nd / 3rd / 4th"
-        />
-
-        {/* SKILLS */}
-        <label>
-          Skills
-        </label>
 
         <textarea
-          placeholder="Mention your skills..."
-        ></textarea>
+          name="reason"
+          placeholder="Why do you want to join?"
+          onChange={
+            handleChange
+          }
+          required
+        />
 
-        {/* WHY JOIN */}
-        <label>
-          Why do you want to join?
-        </label>
-
-        <textarea
-          placeholder="Write your motivation..."
-        ></textarea>
-
-        {/* BUTTON */}
-        <button type="submit">
+        <button
+          type="submit"
+        >
           Submit Application
         </button>
 
@@ -104,6 +183,7 @@ function ApplicationForm() {
     </div>
 
   );
+
 }
 
 export default ApplicationForm;

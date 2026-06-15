@@ -40,5 +40,11 @@ export const joinClub = (data) => {
 export const getUserClubs = (userId) => {
   return API.get(`/memberships/user/${userId}`);
 };
+export const getAllRecruitments = () => {
+  return API.get("/recruitments");
+};
 
+export const submitApplication = (data) => {
+  return API.post("/applications", data);
+};
 export default API;
