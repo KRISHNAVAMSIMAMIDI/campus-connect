@@ -49,7 +49,7 @@ function ClubCard({ club }) {
         <button
           className="explore-btn"
           onClick={() =>
-            navigate(`/clubs/${club.id}`)
+            navigate(`${club.id}`, { relative: "path" })
           }
         >
           🔍 Explore

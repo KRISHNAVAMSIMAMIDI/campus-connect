@@ -19,14 +19,14 @@ function Dashboard() {
           </button>
 
           <img
-            src="https://via.placeholder.com/50"
+            src="/GVPLOGO.jpg"
             alt="College Logo"
             className="logo"
           />
 
-          <div>
-            <h2>Gayatri Vidya Parishad</h2>
-            <p>CampusConnect</p>
+          <div className="header-title">
+            <h2>Gayatri Vidya Parishad College of Engineering</h2>
+            <p>CampusConnect Portal</p>
           </div>
         </div>
 

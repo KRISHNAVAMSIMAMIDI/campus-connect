@@ -45,6 +45,11 @@ function App() {
           />
 
           <Route
+            path="clubs/:id"
+            element={<ClubProfile />}
+          />
+
+          <Route
             path="club-profile"
             element={<ClubProfile />}
           />
@@ -52,6 +57,11 @@ function App() {
           <Route
             path="events"
             element={<Events />}
+          />
+
+          <Route
+            path="events/:id"
+            element={<EventDetails />}
           />
 
           <Route

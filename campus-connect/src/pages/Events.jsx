@@ -117,7 +117,7 @@ function Events() {
               status={event.status}
 
               onClick={() =>
-                navigate(`/events/${event.id}`)
+                navigate(`${event.id}`, { relative: "path" })
               }
 
             />
