@@ -1,20 +1,67 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate, useOutlet } from "react-router-dom";
+
+import {
+  getAllClubs,
+  getAllEvents,
+  getAllRecruitments,
+} from "../services/api";
+
 import "./Dashboard.css";
 
 function Dashboard() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+
+  const [clubs, setClubs] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [recruitments, setRecruitments] = useState([]);
+
   const navigate = useNavigate();
   const location = useLocation();
   const outlet = useOutlet();
-  const isClubProfile = location.pathname === "/dashboard/club-profile";
+
+  const isClubProfile =
+    location.pathname === "/dashboard/club-profile";
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [
+          clubsRes,
+          eventsRes,
+          recruitmentsRes,
+        ] = await Promise.all([
+          getAllClubs(),
+          getAllEvents(),
+          getAllRecruitments(),
+        ]);
+
+        setClubs(clubsRes.data);
+        setEvents(eventsRes.data);
+        setRecruitments(recruitmentsRes.data);
+      } catch (error) {
+        console.error("Dashboard Error:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <div className={`dashboard${isClubProfile ? " dashboard-scroll-page" : ""}`}>
+    <div
+      className={`dashboard${
+        isClubProfile
+          ? " dashboard-scroll-page"
+          : ""
+      }`}
+    >
       {/* HEADER */}
       <header className="header">
         <div className="header-left">
-          <button className="back-btn" onClick={() => navigate(-1)}>
+          <button
+            className="back-btn"
+            onClick={() => navigate(-1)}
+          >
             &lt;
           </button>
 
@@ -34,18 +81,28 @@ function Dashboard() {
           <div className="notification-wrapper">
             <button
               className="icon-btn"
-              onClick={() => navigate("/dashboard/notifications")}
+              onClick={() =>
+                navigate(
+                  "/dashboard/notifications"
+                )
+              }
             >
               !
             </button>
 
-            <span className="notification-badge">3</span>
+            <span className="notification-badge">
+              3
+            </span>
           </div>
 
           <div className="profile-container">
             <button
               className="icon-btn"
-              onClick={() => setShowProfileMenu(!showProfileMenu)}
+              onClick={() =>
+                setShowProfileMenu(
+                  !showProfileMenu
+                )
+              }
             >
               P
             </button>
@@ -54,14 +111,19 @@ function Dashboard() {
               <div className="profile-menu">
                 <p
                   onClick={() => {
-                    navigate("/dashboard/profile");
+                    navigate(
+                      "/dashboard/profile"
+                    );
                     setShowProfileMenu(false);
                   }}
                 >
                   Profile
                 </p>
+
                 <p>Settings</p>
+
                 <p>Help</p>
+
                 <p>Logout</p>
               </div>
             )}
@@ -71,172 +133,216 @@ function Dashboard() {
 
       {/* MAIN BODY */}
       <div className="main-container">
+
         {/* SIDEBAR */}
         <aside className="sidebar">
 
-  <button
-    className={
-      location.pathname === "/dashboard"
-        ? "active"
-        : ""
-    }
-    onClick={() => navigate("/dashboard")}
-  >
-    Dashboard
-  </button>
+          <button
+            className={
+              location.pathname ===
+              "/dashboard"
+                ? "active"
+                : ""
+            }
+            onClick={() =>
+              navigate("/dashboard")
+            }
+          >
+            Dashboard
+          </button>
 
-  <button
-    className={
-      location.pathname === "/dashboard/clubs"
-        ? "active"
-        : ""
-    }
-    onClick={() => navigate("/dashboard/clubs")}
-  >
-    Clubs
-  </button>
+          <button
+            className={
+              location.pathname ===
+              "/dashboard/clubs"
+                ? "active"
+                : ""
+            }
+            onClick={() =>
+              navigate("/dashboard/clubs")
+            }
+          >
+            Clubs
+          </button>
 
-  <button
-    className={
-      location.pathname === "/dashboard/events"
-        ? "active"
-        : ""
-    }
-    onClick={() => navigate("/dashboard/events")}
-  >
-    Events
-  </button>
+          <button
+            className={
+              location.pathname ===
+              "/dashboard/events"
+                ? "active"
+                : ""
+            }
+            onClick={() =>
+              navigate("/dashboard/events")
+            }
+          >
+            Events
+          </button>
 
-  <button
-    className={
-      location.pathname === "/dashboard/recruitments"
-        ? "active"
-        : ""
-    }
-    onClick={() => navigate("/dashboard/recruitments")}
-  >
-    Recruitments
-  </button>
+          <button
+            className={
+              location.pathname ===
+              "/dashboard/recruitments"
+                ? "active"
+                : ""
+            }
+            onClick={() =>
+              navigate(
+                "/dashboard/recruitments"
+              )
+            }
+          >
+            Recruitments
+          </button>
 
-</aside>
+        </aside>
 
         {/* CONTENT */}
         <main className="content">
           {outlet || (
-            <>
-              {/* Club Advertisements */}
+            <>              {/* ACTIVE CLUBS */}
               <section>
-                <h2>Club Advertisements</h2>
+                <h2>Active Clubs</h2>
 
                 <div className="cards">
-                  <div className="poster">
-                    <img
-                      src="https://picsum.photos/400/200"
-                      alt="Coding Club"
-                    />
+                  {clubs
+                    .slice(0, 2)
+                    .map((club) => (
+                      <div
+                        className="poster"
+                        key={club.id}
+                      >
+                        <img
+                          src={
+                            club.bannerUrl ||
+                            "https://picsum.photos/400/200"
+                          }
+                          alt={club.name}
+                        />
 
-                    <h4>Web Development Bootcamp</h4>
+                        <h4>{club.name}</h4>
 
-                    <button>View Details</button>
-                  </div>
+                        <p>
+                          {club.tagline}
+                        </p>
 
-                  <div className="poster">
-                    <img
-                      src="https://picsum.photos/401/200"
-                      alt="Robotics Club"
-                    />
-
-                    <h4>National Robotics Challenge</h4>
-
-                    <button>Register</button>
-                  </div>
+                        <button
+                          onClick={() =>
+                            navigate(
+                              "/dashboard/clubs"
+                            )
+                          }
+                        >
+                          View Details
+                        </button>
+                      </div>
+                    ))}
                 </div>
               </section>
 
-              {/* Recruitment Notifications */}
+              {/* ACTIVE RECRUITMENTS */}
               <section>
-                <h2>Recruitment Notifications</h2>
+                <h2>
+                  Active Recruitments
+                </h2>
 
-                <div className="alert-card">
-                  <h4>Coding Club Recruitment Open</h4>
+                {recruitments
+                  .slice(0, 2)
+                  .map((item) => (
+                    <div
+                      className="alert-card"
+                      key={item.id}
+                    >
+                      <h4>
+                        {item.clubName}
+                        {" - "}
+                        {item.role}
+                      </h4>
 
-                  <p>Deadline: June 15</p>
+                      <p>
+                        Team :
+                        {" "}
+                        {item.team}
+                      </p>
 
-                  <button>Apply Now</button>
-                </div>
+                      <p>
+                        Deadline :
+                        {" "}
+                        {item.deadline}
+                      </p>
 
-                <div className="alert-card">
-                  <h4>Photography Club Hiring</h4>
-
-                  <p>Applications Open</p>
-
-                  <button>Apply Now</button>
-                </div>
+                      <button
+                        onClick={() =>
+                          navigate(
+                            "/dashboard/recruitments"
+                          )
+                        }
+                      >
+                        Apply Now
+                      </button>
+                    </div>
+                  ))}
               </section>
 
-              {/* Event Posters */}
+{/* UPCOMING EVENTS */}
+<section>
+  <h2>Upcoming Events</h2>
+
+  <div className="cards">
+    {events.slice(1, 3).map((event) => (
+      <div className="poster" key={event.id}>
+        <img
+          src={
+            event.imageUrl
+              ? event.imageUrl
+              : "https://picsum.photos/400/200"
+          }
+          alt={event.eventName}
+        />
+
+        <h4>{event.eventName}</h4>
+
+        <p>
+          <strong>Venue:</strong> {event.venue}
+        </p>
+
+        <p>
+          <strong>Date:</strong> {event.eventDate}
+        </p>
+
+        <button
+          onClick={() =>
+            navigate("/dashboard/events")
+          }
+        >
+          View Event
+        </button>
+      </div>
+    ))}
+  </div>
+</section>
+
+              {/* ANNOUNCEMENTS */}
               <section>
-                <h2>Event Posters</h2>
-
-                <div className="cards">
-                  <div className="poster">
-                    <img
-                      src="https://picsum.photos/402/200"
-                      alt="Hackathon"
-                    />
-
-                    <h4>Hackathon 2026</h4>
-
-                    <button>Register</button>
-                  </div>
-
-                  <div className="poster">
-                    <img src="https://picsum.photos/403/200" alt="Workshop" />
-
-                    <h4>AI Workshop</h4>
-
-                    <button>Register</button>
-                  </div>
-                </div>
-              </section>
-
-              {/* Upcoming Events */}
-              <section>
-                <h2>Upcoming Events</h2>
-
-                <div className="cards">
-                  <div className="card">
-                    <h3>Hackathon 2026</h3>
-
-                    <p>June 20 - Seminar Hall</p>
-
-                    <button>View Event</button>
-                  </div>
-
-                  <div className="card">
-                    <h3>AI Workshop</h3>
-
-                    <p>June 25 - Auditorium</p>
-
-                    <button>View Event</button>
-                  </div>
-                </div>
-              </section>
-
-              {/* Announcements */}
-              <section>
-                <h2>Announcements</h2>
+                <h2>
+                  Announcements
+                </h2>
 
                 <div className="announcement">
-                  Placement Drive Starts Next Monday.
+                  Welcome to
+                  CampusConnect.
                 </div>
 
                 <div className="announcement">
-                  Photography Contest Results Released.
+                  Check active
+                  recruitments before
+                  deadlines.
                 </div>
 
                 <div className="announcement">
-                  New Clubs Added To CampusConnect.
+                  Participate in club
+                  activities and
+                  upcoming events.
                 </div>
               </section>
             </>

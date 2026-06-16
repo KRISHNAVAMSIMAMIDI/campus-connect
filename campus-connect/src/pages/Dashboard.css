@@ -515,3 +515,64 @@ font-size: 22px;
 font-size: 24px;
 }
 }
+/* =========================
+DYNAMIC DASHBOARD
+========================= */
+
+.poster p {
+  margin: 0 16px 16px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.loading {
+  padding: 60px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.card p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.alert-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.alert-card button {
+  width: fit-content;
+  margin-left: 0;
+  margin-top: 10px;
+}
+
+.content section {
+  margin-bottom: 10px;
+}
+
+.empty-message {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  text-align: center;
+  font-weight: 600;
+}
+.poster p {
+  margin: 0 16px 16px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.loading {
+  padding: 50px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+}
