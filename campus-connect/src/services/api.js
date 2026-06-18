@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: "https://didactic-capybara-7v9g6g9ppr7xhxp54-8080.app.github.dev/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -10,6 +10,17 @@ const API = axios.create({
 // Register User
 export const registerUser = (userData) => {
   return API.post("/auth/register", userData);
+};
+
+export const sendOtp = (email) => {
+  return API.post("/auth/send-otp", { email });
+};
+
+export const verifyOtp = (email, otp) => {
+  return API.post("/auth/verify-otp", {
+    email,
+    otp
+  });
 };
 
 // Login User
