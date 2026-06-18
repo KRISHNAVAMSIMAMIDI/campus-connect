@@ -44,7 +44,7 @@ function Login() {
         return;
       }
 
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("user", JSON.stringify(response.data));
 
       let destination = "/dashboard";
 

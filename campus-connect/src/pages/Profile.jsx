@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 
@@ -7,54 +8,47 @@ function Profile() {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
 
-  const [userData, setUserData] = useState({
-    id: 1,
-    name: "Aditya Kumar",
-    studentId: "22B31A0501",
-    department: "Computer Science & Engineering",
-    section: "CSE-A",
-    year: 2,
+  const [userData, setUserData] = useState(null);
+  const [editData, setEditData] = useState(null);
 
-    email: "aditya.kumar@college.edu",
-    phone: "+91 9876543210",
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const storedUser = JSON.parse(
+          localStorage.getItem("user")
+        );
 
-    bio: "Passionate about coding, web development and open-source contribution.",
+        const email = storedUser?.email ?? storedUser?.user?.email;
 
-    joinedDate: "2024-01-15",
+        if (!email) {
+          alert("Unable to load profile: user email not found.");
+          return;
+        }
 
-    profilePicture:
-      "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-  });
+        const response = await axios.get(
+          `http://localhost:8080/api/users/profile/${encodeURIComponent(email)}`
+        );
+
+        setUserData(response.data);
+        setEditData(response.data);
+
+      } catch (error) {
+        console.error(error);
+        alert("Failed to load profile.");
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const [stats] = useState({
-    clubs: 5,
-    events: 12,
-    certificates: 8,
-    recruitments: 2
+    clubs: 0,
+    events: 0,
+    certificates: 0,
+    recruitments: 0
   });
 
-  const [joinedClubs] = useState([
-    {
-      id: 1,
-      name: "Coding Club",
-      description: "Learn programming and participate in hackathons.",
-      logo:
-        "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-      joinedDate: "2024-02-01",
-      role: "Member"
-    },
-    {
-      id: 2,
-      name: "AI Club",
-      description: "Explore AI, ML and Data Science.",
-      logo:
-        "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-      joinedDate: "2024-03-10",
-      role: "Coordinator"
-    }
-  ]);
-
-  const [editData, setEditData] = useState(userData);
+  const [joinedClubs] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -80,6 +74,24 @@ function Profile() {
       `Remove request for ${clubName} has been sent to the club head.`
     );
   };
+
+  if (!userData) {
+    return (
+      <main className="profile-page">
+
+        <div className="profile-header">
+
+          <h1>My Profile</h1>
+
+        </div>
+
+        <div className="profile-container">
+          Loading Profile...
+        </div>
+
+      </main>
+    );
+  }
 
   return (
     <main className="profile-page">
@@ -111,12 +123,8 @@ function Profile() {
 
               <h2>{userData.name}</h2>
 
-              <p className="department">
-                {userData.department}
-              </p>
-
               <p className="bio">
-                {userData.bio}
+                {userData.role}
               </p>
 
               <div className="contact-info">
@@ -125,9 +133,6 @@ function Profile() {
                   📧 {userData.email}
                 </span>
 
-                <span>
-                  📱 {userData.phone}
-                </span>
 
               </div>
 
@@ -161,7 +166,7 @@ function Profile() {
                 <input
                   type="text"
                   name="name"
-                  value={editData.name}
+                  value={editData.name || ""}
                   onChange={handleInputChange}
                 />
 
@@ -174,7 +179,7 @@ function Profile() {
                 <input
                   type="email"
                   name="email"
-                  value={editData.email}
+                  value={editData.email || ""}
                   onChange={handleInputChange}
                 />
 
@@ -182,12 +187,12 @@ function Profile() {
 
               <div className="form-group">
 
-                <label>Phone</label>
+                <label>Roll Number</label>
 
                 <input
                   type="text"
-                  name="phone"
-                  value={editData.phone}
+                  name="rollNumber"
+                  value={editData.rollNumber || ""}
                   onChange={handleInputChange}
                 />
 
@@ -195,12 +200,12 @@ function Profile() {
 
               <div className="form-group">
 
-                <label>Bio</label>
+                <label>Branch</label>
 
-                <textarea
-                  rows="3"
-                  name="bio"
-                  value={editData.bio}
+                <input
+                  type="text"
+                  name="branch"
+                  value={editData.branch || ""}
                   onChange={handleInputChange}
                 />
 
@@ -236,41 +241,41 @@ function Profile() {
 
               <div className="info-item">
                 <span className="label">
-                  Student ID
+                  Roll Number
                 </span>
 
                 <span className="value">
-                  {userData.studentId}
+                  {userData.rollNumber}
                 </span>
               </div>
 
               <div className="info-item">
                 <span className="label">
-                  Department
+                  Branch
                 </span>
 
                 <span className="value">
-                  {userData.department}
+                  {userData.branch}
                 </span>
               </div>
 
               <div className="info-item">
                 <span className="label">
-                  Section
+                  Passout Year
                 </span>
 
                 <span className="value">
-                  {userData.section}
+                  {userData.passoutYear}
                 </span>
               </div>
 
               <div className="info-item">
                 <span className="label">
-                  Year
+                  Role
                 </span>
 
                 <span className="value">
-                  Year {userData.year}
+                  {userData.role}
                 </span>
               </div>
 
