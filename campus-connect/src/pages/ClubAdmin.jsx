@@ -1,14 +1,61 @@
 import { useState } from "react";
 import "./ClubAdmin.css";
+import { createEvent } from "../services/api";
 
 function ClubAdmin() {
+  const [eventData, setEventData] = useState({
+  eventName: "",
+  description: "",
+  venue: "",
+  eventDate: "",
+  organizer: "Coding Club",
+  imageUrl: "",
+  status: "ACTIVE",
+});
 
   const [activeSection, setActiveSection] =
     useState("dashboard");
 
   const [selectedApplicant, setSelectedApplicant] =
     useState(null);
+const handleEventChange = (e) => {
+  setEventData({
+    ...eventData,
+    [e.target.name]: e.target.value,
+  });
+};
 
+const handlePublishEvent = async () => {
+  try {
+    const response = await createEvent(eventData);
+
+    // Save the created event to localStorage so other tabs/clients
+    // (and the Events page) can pick it up without changing backend code.
+    try {
+      const created = response.data;
+      localStorage.setItem("newEvent", JSON.stringify(created));
+      // Dispatch a CustomEvent for same-tab listeners
+      window.dispatchEvent(new CustomEvent("newEvent", { detail: created }));
+    } catch (e) {
+      console.warn("localStorage setItem failed", e);
+    }
+
+    alert("Event Created Successfully");
+
+    setEventData({
+      eventName: "",
+      description: "",
+      venue: "",
+      eventDate: "",
+      organizer: "Coding Club",
+      imageUrl: "",
+      status: "ACTIVE",
+    });
+  } catch (error) {
+    console.error(error);
+    alert("Failed to create event");
+  }
+};
   const applications = [
 
     {
@@ -132,36 +179,71 @@ function ClubAdmin() {
 
         )}
 
-        {/* CREATE EVENT */}
-        {activeSection === "events" && (
+{activeSection === "events" && (
+  <div className="form-section">
+    <h1>Create Event</h1>
 
-          <div className="form-section">
+    <input
+      type="text"
+      name="eventName"
+      placeholder="Event Name"
+      value={eventData.eventName}
+      onChange={handleEventChange}
+    />
 
-            <h1>Create Event</h1>
+    <textarea
+      name="description"
+      placeholder="Description"
+      value={eventData.description}
+      onChange={handleEventChange}
+    />
 
-            <input
-              type="text"
-              placeholder="Event Title"
-            />
+    <input
+      type="date"
+      name="eventDate"
+      value={eventData.eventDate}
+      onChange={handleEventChange}
+    />
 
-            <textarea
-              placeholder="Event Description"
-            ></textarea>
+    <input
+      type="text"
+      name="venue"
+      placeholder="Venue"
+      value={eventData.venue}
+      onChange={handleEventChange}
+    />
 
-            <input type="date" />
+    <input
+      type="text"
+      name="imageUrl"
+      placeholder="Image URL"
+      value={eventData.imageUrl}
+      onChange={handleEventChange}
+    />
 
-            <input
-              type="text"
-              placeholder="Venue"
-            />
+    <input
+      type="text"
+      name="organizer"
+      placeholder="Organizer (e.g., Coding Club)"
+      value={eventData.organizer}
+      onChange={handleEventChange}
+    />
 
-            <button>
-              Publish Event
-            </button>
+    <select
+      name="status"
+      value={eventData.status}
+      onChange={handleEventChange}
+    >
+      <option value="ACTIVE">ACTIVE</option>
+      <option value="INACTIVE">INACTIVE</option>
+      <option value="CANCELLED">CANCELLED</option>
+    </select>
 
-          </div>
-
-        )}
+    <button onClick={handlePublishEvent}>
+      Publish Event
+    </button>
+  </div>
+)}
 
         {/* RECRUITMENTS */}
         {activeSection === "recruitments" && (

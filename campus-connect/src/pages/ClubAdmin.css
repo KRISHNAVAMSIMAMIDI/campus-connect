@@ -169,7 +169,8 @@
 }
 
 .admin-page .form-section input,
-.admin-page .form-section textarea {
+.admin-page .form-section textarea,
+.admin-page .form-section select {
   width: 100%;
 
   padding: 15px;
@@ -188,7 +189,8 @@
 }
 
 .admin-page .form-section input:focus,
-.admin-page .form-section textarea:focus {
+.admin-page .form-section textarea:focus,
+.admin-page .form-section select:focus {
   border-color: #00D4FF;
 }
 

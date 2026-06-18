@@ -58,4 +58,8 @@ export const getAllRecruitments = () => {
 export const submitApplication = (data) => {
   return API.post("/applications", data);
 };
+// Create Event
+export const createEvent = (eventData) => {
+  return API.post("/events", eventData);
+};
 export default API;
