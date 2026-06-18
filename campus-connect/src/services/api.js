@@ -28,6 +28,35 @@ export const loginUser = (loginData) => {
   return API.post("/auth/login", loginData);
 };
 
+export const changePassword = (
+  email,
+  currentPassword,
+  newPassword
+) => {
+  const token = localStorage.getItem("token");
+  const config = {
+    headers: {}
+  };
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return API.put(
+    "/auth/change-password",
+    {
+      email,
+      currentPassword,
+      newPassword
+    },
+    config
+  );
+};
+
+export const getHelp = () => {
+  return API.get("/help");
+};
+
 // Events
 export const getAllEvents = () => {
   return API.get("/events");

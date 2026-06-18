@@ -1,0 +1,67 @@
+.settings-page {
+  min-height: 100%;
+}
+
+.settings-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  max-width: 560px;
+  padding: 30px;
+}
+
+.settings-card h1 {
+  border-left: 5px solid var(--primary);
+  color: var(--text-dark);
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 24px;
+  padding-left: 12px;
+}
+
+.password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.password-field label {
+  color: var(--text-dark);
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.password-field input {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 13px 14px;
+  width: 100%;
+}
+
+.password-field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.15);
+  outline: none;
+}
+
+.password-form button {
+  background: var(--primary);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 800;
+  margin-top: 6px;
+  padding: 13px 20px;
+  width: fit-content;
+}
+
+.password-form button:hover {
+  background: var(--primary-dark);
+}

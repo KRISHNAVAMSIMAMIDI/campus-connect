@@ -22,8 +22,11 @@ function Login() {
 
       const payload = response.data;
       const user = payload?.user ?? payload;
+      const token = payload?.token || payload?.accessToken;
 
-      console.log("login response", payload, user);
+      if (token) {
+        localStorage.setItem("token", token);
+      }
 
       const selectedRoleMap = {
         student: "STUDENT",

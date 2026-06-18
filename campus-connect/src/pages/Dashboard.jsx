@@ -23,6 +23,17 @@ function Dashboard() {
   const isClubProfile =
     location.pathname === "/dashboard/club-profile";
 
+  const closeProfileMenu = () => {
+    setShowProfileMenu(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    closeProfileMenu();
+    navigate("/");
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -120,11 +131,31 @@ function Dashboard() {
                   Profile
                 </p>
 
-                <p>Settings</p>
+                <p
+                  onClick={() => {
+                    navigate(
+                      "/dashboard/settings"
+                    );
+                    closeProfileMenu();
+                  }}
+                >
+                  Settings
+                </p>
 
-                <p>Help</p>
+                <p
+                  onClick={() => {
+                    navigate(
+                      "/dashboard/help"
+                    );
+                    closeProfileMenu();
+                  }}
+                >
+                  Help
+                </p>
 
-                <p>Logout</p>
+                <p onClick={handleLogout}>
+                  Logout
+                </p>
               </div>
             )}
           </div>
