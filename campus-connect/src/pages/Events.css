@@ -34,6 +34,7 @@
   color: #666;
 }
 
+
 /* EVENT CARDS */
 
 .events-container {
@@ -129,3 +130,4 @@
     grid-template-columns: 1fr;
   }
 }
+
