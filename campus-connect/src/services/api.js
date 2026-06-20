@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: "/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -42,11 +42,11 @@ export const changePassword = (
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  return API.put(
-    "/auth/change-password",
+  return API.post(
+    "/users/change-password",
     {
       email,
-      currentPassword,
+      oldPassword: currentPassword,
       newPassword
     },
     config
@@ -86,5 +86,9 @@ export const getAllRecruitments = () => {
 
 export const submitApplication = (data) => {
   return API.post("/applications", data);
+};
+// Create Event
+export const createEvent = (eventData) => {
+  return API.post("/events", eventData);
 };
 export default API;

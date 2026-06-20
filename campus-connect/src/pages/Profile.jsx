@@ -25,7 +25,7 @@ function Profile() {
         }
 
         const response = await axios.get(
-          `http://localhost:8080/api/users/profile/${encodeURIComponent(email)}`
+          `/api/users/profile/${encodeURIComponent(email)}`
         );
 
         setUserData(response.data);
