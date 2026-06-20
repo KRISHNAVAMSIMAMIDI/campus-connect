@@ -130,7 +130,7 @@ body {
 
 .profile-header-section {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 30px;
 }
 
@@ -144,9 +144,11 @@ body {
 
   border-radius: 50%;
 
-  object-fit: cover;
+  object-fit: contain;
 
   border: 5px solid var(--primary);
+  background: #FFF4F1;
+  padding: 12px;
 
   flex-shrink: 0;
 }
@@ -195,128 +197,6 @@ body {
   font-size: 14px;
 
   font-weight: 500;
-}
-
-/* =========================
-   EDIT BUTTON
-========================= */
-
-.edit-btn {
-  background: var(--primary);
-
-  color: white;
-
-  border: none;
-
-  border-radius: 10px;
-
-  padding: 12px 22px;
-
-  cursor: pointer;
-
-  font-weight: 700;
-
-  transition: 0.3s;
-}
-
-.edit-btn:hover {
-  background: var(--primary-dark);
-}
-
-.edit-btn.cancel {
-  background: var(--danger);
-}
-
-.edit-btn.cancel:hover {
-  background: #B91C1C;
-}
-
-/* =========================
-   EDIT FORM
-========================= */
-
-.edit-form {
-  margin-top: 30px;
-
-  background: #FFF4F1;
-
-  border-left: 5px solid var(--primary);
-
-  border-radius: 12px;
-
-  padding: 25px;
-}
-
-.form-group {
-  margin-bottom: 18px;
-}
-
-.form-group label {
-  display: block;
-
-  margin-bottom: 8px;
-
-  font-weight: 700;
-
-  color: var(--text-dark);
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-
-  padding: 12px;
-
-  border: 1px solid var(--border);
-
-  border-radius: 10px;
-
-  font-size: 14px;
-
-  font-family: inherit;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-
-  border-color: var(--accent);
-
-  box-shadow: 0 0 0 3px rgba(0,212,255,0.15);
-}
-
-.form-buttons {
-  display: flex;
-  gap: 15px;
-}
-
-.save-btn,
-.cancel-form-btn {
-  flex: 1;
-
-  padding: 12px;
-
-  border: none;
-
-  border-radius: 10px;
-
-  cursor: pointer;
-
-  font-weight: 700;
-}
-
-.save-btn {
-  background: var(--primary);
-  color: white;
-}
-
-.save-btn:hover {
-  background: var(--primary-dark);
-}
-
-.cancel-form-btn {
-  background: #E5E7EB;
-  color: var(--text-dark);
 }
 
 /* =========================
@@ -726,8 +606,5 @@ body {
     grid-template-columns: 1fr 1fr;
   }
 
-  .form-buttons {
-    flex-direction: column;
-  }
 }
 

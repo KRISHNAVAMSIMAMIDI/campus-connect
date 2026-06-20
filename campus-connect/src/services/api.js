@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: "/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -26,6 +26,35 @@ export const verifyOtp = (email, otp) => {
 // Login User
 export const loginUser = (loginData) => {
   return API.post("/auth/login", loginData);
+};
+
+export const changePassword = (
+  email,
+  currentPassword,
+  newPassword
+) => {
+  const token = localStorage.getItem("token");
+  const config = {
+    headers: {}
+  };
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return API.post(
+    "/users/change-password",
+    {
+      email,
+      oldPassword: currentPassword,
+      newPassword
+    },
+    config
+  );
+};
+
+export const getHelp = () => {
+  return API.get("/help");
 };
 
 // Events

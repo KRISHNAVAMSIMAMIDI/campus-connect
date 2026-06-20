@@ -19,6 +19,8 @@ import ClubAdmin from "./pages/ClubAdmin";
 import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 import EventOrganizerDashboard from "./pages/EventOrganizerDashboard";
 import Messages from "./pages/Messages";
+import Settings from "./pages/Settings";
+import Help from "./pages/Help";
 
 function App() {
   return (
@@ -82,6 +84,16 @@ function App() {
           <Route
             path="notifications"
             element={<Notifications />}
+          />
+
+          <Route
+            path="settings"
+            element={<Settings />}
+          />
+
+          <Route
+            path="help"
+            element={<Help />}
           />
         </Route>
         
