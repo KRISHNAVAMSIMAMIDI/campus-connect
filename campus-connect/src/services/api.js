@@ -58,8 +58,28 @@ export const getAllRecruitments = () => {
 export const submitApplication = (data) => {
   return API.post("/applications", data);
 };
+export const getAllApplications = () => {
+  return API.get("/applications");
+};
+export const approveApplication = (id) =>
+  API.put(`/applications/${id}/approve`);
+
+export const rejectApplication = (id) =>
+  API.put(`/applications/${id}/reject`);
 // Create Event
 export const createEvent = (eventData) => {
   return API.post("/events", eventData);
+};
+export const createRecruitment = (data) =>
+  API.post("/recruitments", data);
+
+export const getRecruitments = () =>
+  API.get("/recruitments");
+
+export const deleteRecruitment = (id) => {
+  if (!id) {
+    return Promise.reject(new Error("Missing recruitment id for deleteRecruitment"));
+  }
+  return API.delete(`/recruitments/${id}`);
 };
 export default API;
