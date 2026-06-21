@@ -34,12 +34,14 @@ export const changePassword = (
   newPassword
 ) => {
   const token = localStorage.getItem("token");
+
   const config = {
     headers: {}
   };
 
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization =
+      `Bearer ${token}`;
   }
 
   return API.post(
@@ -65,6 +67,8 @@ export const getAllEvents = () => {
 export const getEventById = (id) => {
   return API.get(`/events/${id}`);
 };
+
+// Clubs
 export const getAllClubs = () => {
   return API.get("/clubs");
 };
@@ -72,7 +76,8 @@ export const getAllClubs = () => {
 export const getClubById = (id) => {
   return API.get(`/clubs/${id}`);
 };
-//join club
+
+// Join Club
 export const joinClub = (data) => {
   return API.post("/memberships", data);
 };
@@ -83,37 +88,65 @@ export const updateClub = (id, clubData) => {
 export const getUserClubs = (userId) => {
   return API.get(`/memberships/user/${userId}`);
 };
+
+// Recruitments
 export const getAllRecruitments = () => {
   return API.get("/recruitments");
+};
+
+export const createRecruitment = (
+  recruitmentData
+) => {
+  return API.post(
+    "/recruitments",
+    recruitmentData
+  );
+};
+
+export const getRecruitments = () => {
+  return API.get("/recruitments");
+};
+
+export const deleteRecruitment = (id) => {
+  return API.delete(
+    `/recruitments/${id}`
+  );
+};
+
+// Applications
+export const getAllApplications = () => {
+  return API.get("/applications");
+};
+
+export const approveApplication = (id) => {
+  return API.post(
+    `/applications/${id}/approve`
+  );
+};
+
+export const rejectApplication = (id) => {
+  return API.post(
+    `/applications/${id}/reject`
+  );
 };
 
 export const submitApplication = (data) => {
   return API.post("/applications", data);
 };
-export const getAllApplications = () => {
-  return API.get("/applications");
-};
-export const approveApplication = (id) =>
-  API.put(`/applications/${id}/approve`);
 
-export const rejectApplication = (id) =>
-  API.put(`/applications/${id}/reject`);
 // Create Event
 export const createEvent = (eventData) => {
   return API.post("/events", eventData);
 };
-export const createRecruitment = (data) =>
-  API.post("/recruitments", data);
 
-export const getRecruitments = () =>
-  API.get("/recruitments");
-
-export const deleteRecruitment = (id) => {
-  if (!id) {
-    return Promise.reject(new Error("Missing recruitment id for deleteRecruitment"));
-  }
-  return API.delete(`/recruitments/${id}`);
+// Create Club
+export const createClub = (clubData) => {
+  return API.post(
+    "/admin/create-club",
+    clubData
+  );
 };
+
 // Announcements
 export const createAnnouncement = (data) =>
   API.post("/announcements", data);
