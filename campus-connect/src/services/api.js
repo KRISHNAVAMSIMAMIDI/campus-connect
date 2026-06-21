@@ -7,6 +7,17 @@ const API = axios.create({
   },
 });
 
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization =
+      `Bearer ${token}`;
+  }
+
+  return config;
+});
+
 // Register User
 export const registerUser = (userData) => {
   return API.post("/auth/register", userData);
@@ -142,6 +153,65 @@ export const createClub = (clubData) => {
     "/admin/create-club",
     clubData
   );
+};
+
+// Super Admin
+export const getAdminDashboard = () => {
+  return API.get("/admin/dashboard");
+};
+
+export const getAdminClubs = () => {
+  return API.get("/admin/clubs");
+};
+
+export const deleteAdminClub = (id) => {
+  return API.delete(`/admin/clubs/${id}`);
+};
+
+export const updateAdminClub = (id, clubData) => {
+  return API.put(`/admin/clubs/${id}`, clubData);
+};
+
+export const getAdminEvents = () => {
+  return API.get("/admin/events").catch(() =>
+    API.get("/events")
+  );
+};
+
+export const approveAdminEvent = (id) => {
+  return API.put(`/admin/events/${id}/approve`);
+};
+
+export const rejectAdminEvent = (id) => {
+  return API.put(`/admin/events/${id}/reject`);
+};
+
+export const deleteAdminEvent = (id) => {
+  return API.delete(`/admin/events/${id}`);
+};
+
+export const getAdminUsers = () => {
+  return API.get("/admin/users");
+};
+
+export const updateAdminUserRole = (id, role) => {
+  return API.put(`/admin/users/${id}/role`, {
+    role
+  });
+};
+
+export const deleteAdminUser = (id) => {
+  return API.delete(`/admin/users/${id}`);
+};
+
+export const sendAdminNotification = (message) => {
+  return API.post("/admin/notifications", {
+    message
+  });
+};
+
+export const getAdminAnalytics = () => {
+  return API.get("/admin/analytics");
 };
 
 export default API;

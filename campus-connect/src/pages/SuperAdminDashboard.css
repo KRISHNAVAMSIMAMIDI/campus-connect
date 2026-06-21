@@ -100,6 +100,30 @@
   color: #666;
 }
 
+.club-edit-form {
+  display: grid;
+  gap: 12px;
+}
+
+.club-edit-form input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 12px;
+  font: inherit;
+}
+
+.club-edit-form input:focus {
+  border-color: #ff5733;
+  outline: none;
+}
+
+.club-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 /* Notification */
 
 .textarea {
@@ -118,6 +142,15 @@
   padding: 12px 22px;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.sendBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.secondaryBtn {
+  background: #4b5563;
 }
 
 /* Settings */
