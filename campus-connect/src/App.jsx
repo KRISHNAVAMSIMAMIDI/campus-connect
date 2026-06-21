@@ -72,7 +72,7 @@ function App() {
           />
 
           <Route
-            path="apply/:role"
+            path="apply/:id"
             element={<ApplicationForm />}
           />
 
@@ -136,7 +136,7 @@ function App() {
         />
 
         <Route
-            path="/apply/:role"
+            path="/apply/:id"
             element={<ApplicationForm />}
           />
 

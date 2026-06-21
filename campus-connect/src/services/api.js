@@ -161,7 +161,6 @@ export const createClub = (clubData) => {
   );
 };
 
-<<<<<<< HEAD
 // Super Admin
 export const getAdminDashboard = () => {
   return API.get("/admin/dashboard");
@@ -221,8 +220,6 @@ export const getAdminAnalytics = () => {
   return API.get("/admin/analytics");
 };
 
-export default API;
-=======
 // Announcements
 export const createAnnouncement = (data) =>
   API.post("/announcements", data);
@@ -267,5 +264,5 @@ export const getEventsByClubId = (
     `/events/club/${clubId}`
   );
 };
+
 export default API;
->>>>>>> 60c45ee2abf828d928a29fda97134cdb31018165
