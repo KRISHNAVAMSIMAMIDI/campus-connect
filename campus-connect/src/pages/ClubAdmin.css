@@ -359,3 +359,147 @@
 .admin-page .sidebar::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
+.recent-section {
+  margin-top: 30px;
+}
+
+.recent-section h2 {
+  margin-bottom: 15px;
+}
+
+.recent-card {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.recent-card:hover {
+  transform: translateY(-2px);
+}
+
+.recent-card h4 {
+  margin: 0;
+  color: #1e293b;
+}
+
+.recent-card p {
+  margin: 8px 0;
+  color: #64748b;
+}
+
+.recent-card span {
+  font-size: 13px;
+  color: #0f766e;
+  font-weight: 600;
+}
+.club-profile-admin {
+  width: 100%;
+  min-height: 100vh;
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.admin-banner {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-top: -70px;
+  padding-left: 30px;
+}
+
+.admin-logo {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 6px solid white;
+  background: white;
+  object-fit: cover;
+}
+
+.admin-header h1 {
+  font-size: 38px;
+  margin-bottom: 5px;
+  color: #111827;
+}
+
+.admin-header p {
+  font-size: 18px;
+  color: #6b7280;
+}
+
+.club-profile-admin h3 {
+  margin-top: 25px;
+  color: #2563eb;
+  font-size: 22px;
+}
+
+.club-profile-admin p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #374151;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.edit-form input,
+.edit-form textarea {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+}
+
+.edit-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.edit-form button {
+  width: 220px;
+  padding: 14px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.edit-form button:hover {
+  background: #1d4ed8;
+}
+.club-info{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.club-title{
+  font-size:40px;
+  font-weight:700;
+  margin:0;
+}
+
+.club-tagline{
+  font-size:18px;
+  color:#6b7280;
+  margin-top:8px;
+}

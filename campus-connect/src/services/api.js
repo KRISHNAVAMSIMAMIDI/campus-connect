@@ -92,9 +92,15 @@ export const getClubById = (id) => {
 export const joinClub = (data) => {
   return API.post("/memberships", data);
 };
+export const updateClub = (id, clubData) => {
+  return API.put(`/clubs/${id}`, clubData);
+};
 
 export const getUserClubs = (userId) => {
   return API.get(`/memberships/user/${userId}`);
+};
+export const getClubByAdminEmail = (email) => {
+  return API.get(`/clubs/admin?email=${email}`);
 };
 
 // Recruitments
@@ -155,6 +161,7 @@ export const createClub = (clubData) => {
   );
 };
 
+<<<<<<< HEAD
 // Super Admin
 export const getAdminDashboard = () => {
   return API.get("/admin/dashboard");
@@ -215,3 +222,50 @@ export const getAdminAnalytics = () => {
 };
 
 export default API;
+=======
+// Announcements
+export const createAnnouncement = (data) =>
+  API.post("/announcements", data);
+
+export const getAnnouncements = () =>
+  API.get("/announcements");
+
+export const deleteAnnouncement = (id) =>
+  API.delete(`/announcements/${id}`);
+export const getAllAnnouncements = () =>
+  API.get("/announcements");
+// Club Admin APIs
+
+export const getRecruitmentsByClubId = (
+  clubId
+) => {
+  return API.get(
+    `/recruitments/club/${clubId}`
+  );
+};
+
+export const getApplicationsByClubId = (
+  clubId
+) => {
+  return API.get(
+    `/applications/club/${clubId}`
+  );
+};
+
+export const getAnnouncementsByClubId = (
+  clubId
+) => {
+  return API.get(
+    `/announcements/club/${clubId}`
+  );
+};
+
+export const getEventsByClubId = (
+  clubId
+) => {
+  return API.get(
+    `/events/club/${clubId}`
+  );
+};
+export default API;
+>>>>>>> 60c45ee2abf828d928a29fda97134cdb31018165
