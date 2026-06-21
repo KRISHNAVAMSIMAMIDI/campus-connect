@@ -51,10 +51,16 @@ function Recruitments() {
 
       <div className="recruitments-container">
 
-        {recruitments.map((recruitment) => (
+        {recruitments.map((recruitment) => {
+          const recruitmentId =
+            recruitment.id ??
+            recruitment._id ??
+            recruitment.recruitmentId;
+
+          return (
 
           <div
-            key={recruitment.id}
+            key={recruitmentId}
             className="recruitment-card"
           >
 
@@ -93,7 +99,7 @@ function Recruitments() {
             <button
               onClick={() =>
                 navigate(
-                  `/dashboard/apply/${recruitment.id}`
+                  `/dashboard/apply/${recruitmentId}`
                 )
               }
             >
@@ -102,7 +108,8 @@ function Recruitments() {
 
           </div>
 
-        ))}
+          );
+        })}
 
       </div>
 

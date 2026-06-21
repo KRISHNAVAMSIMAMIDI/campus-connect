@@ -37,6 +37,11 @@ function EventDetails() {
     return <h2>Loading...</h2>;
   }
 
+  const clubName =
+    event.clubName ||
+    event.club?.name ||
+    event.organizer;
+
   return (
 
     <div className="event-details-page">
@@ -63,20 +68,28 @@ function EventDetails() {
 
         <div className="event-info">
 
+          {clubName && (
+            <p>
+              <strong>Club:</strong>
+              {" "}
+              {clubName}
+            </p>
+          )}
+
           <p>
-            📅 <strong>Date:</strong>
+            <strong>Date:</strong>
             {" "}
             {event.eventDate}
           </p>
 
           <p>
-            📍 <strong>Venue:</strong>
+            <strong>Venue:</strong>
             {" "}
             {event.venue}
           </p>
 
           <p>
-            👨 <strong>Organizer:</strong>
+            <strong>Organizer:</strong>
             {" "}
             {event.organizer}
           </p>

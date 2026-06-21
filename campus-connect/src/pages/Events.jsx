@@ -158,6 +158,12 @@ function Events() {
 
               title={event.eventName}
 
+              clubName={
+                event.clubName ||
+                event.club?.name ||
+                event.organizer
+              }
+
               venue={event.venue}
 
               date={event.eventDate}

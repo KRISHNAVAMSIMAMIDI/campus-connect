@@ -3,6 +3,7 @@ import "./../pages/Events.css";
 function EventCard({
   image,
   title,
+  clubName,
   venue,
   date,
   status,
@@ -28,9 +29,19 @@ function EventCard({
 
         <h2>{title}</h2>
 
-        <p>📅 {date}</p>
+        {clubName && (
+          <p>
+            <strong>Club:</strong> {clubName}
+          </p>
+        )}
 
-        <p>📍 {venue}</p>
+        <p>
+          <strong>Date:</strong> {date}
+        </p>
+
+        <p>
+          <strong>Venue:</strong> {venue}
+        </p>
 
         <button onClick={onClick}>
           View Details

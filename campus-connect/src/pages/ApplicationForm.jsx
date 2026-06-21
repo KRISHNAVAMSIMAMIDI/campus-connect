@@ -10,8 +10,59 @@ import {
 import "./ApplicationForm.css";
 
 import {
+  getAllRecruitments,
   submitApplication
 } from "../services/api";
+
+const normalizeArray = (payload) => {
+  if (!payload) return [];
+  if (Array.isArray(payload)) return payload;
+  if (payload.data) return normalizeArray(payload.data);
+  if (payload.items) return normalizeArray(payload.items);
+  if (payload.recruitments) return normalizeArray(payload.recruitments);
+  return [];
+};
+
+const getRecordId = (record) => (
+  record?.id ??
+  record?._id ??
+  record?.recruitmentId ??
+  record?.recruitment_id ??
+  null
+);
+
+const getRecruitmentClubId = (recruitment) => (
+  recruitment?.clubId ??
+  recruitment?.club_id ??
+  recruitment?.club?.id ??
+  recruitment?.club?._id ??
+  null
+);
+
+const getRecruitmentClubName = (recruitment) => (
+  recruitment?.clubName ??
+  recruitment?.club_name ??
+  recruitment?.club?.name ??
+  recruitment?.club?.clubName ??
+  ""
+);
+
+const storeClubApplication = (clubId, application) => {
+  if (!clubId) return;
+
+  try {
+    const storageKey = `clubApplications:${clubId}`;
+    const existing = normalizeArray(
+      JSON.parse(localStorage.getItem(storageKey))
+    );
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify([application, ...existing])
+    );
+  } catch (error) {
+    console.warn("Unable to store application locally", error);
+  }
+};
 
 function ApplicationForm() {
 
@@ -60,10 +111,28 @@ function ApplicationForm() {
           )
         );
 
-      await submitApplication({
+      const recruitmentId =
+        Number.isNaN(Number(id))
+          ? id
+          : Number(id);
+
+      const recruitmentsResponse = await getAllRecruitments();
+      const recruitment = normalizeArray(recruitmentsResponse.data)
+        .find((item) =>
+          String(getRecordId(item)) === String(recruitmentId)
+        );
+
+      const clubId = getRecruitmentClubId(recruitment);
+      const clubName = getRecruitmentClubName(recruitment);
+
+      const applicationPayload = {
 
         recruitmentId:
-          Number(id),
+          recruitmentId,
+
+        clubId,
+
+        clubName,
 
         userId:
           user?.id,
@@ -86,7 +155,21 @@ function ApplicationForm() {
         status:
           "PENDING"
 
-      });
+      };
+
+      const response = await submitApplication(applicationPayload);
+
+      storeClubApplication(
+        clubId,
+        {
+          id:
+            response.data?.id ??
+            response.data?._id ??
+            `local-${Date.now()}`,
+          ...applicationPayload,
+          ...response.data,
+        }
+      );
 
       alert(
         "Application Submitted Successfully"
