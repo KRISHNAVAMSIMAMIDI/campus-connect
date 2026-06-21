@@ -76,6 +76,9 @@ export const getClubById = (id) => {
 export const joinClub = (data) => {
   return API.post("/memberships", data);
 };
+export const updateClub = (id, clubData) => {
+  return API.put(`/clubs/${id}`, clubData);
+};
 
 export const getUserClubs = (userId) => {
   return API.get(`/memberships/user/${userId}`);
@@ -111,4 +114,15 @@ export const deleteRecruitment = (id) => {
   }
   return API.delete(`/recruitments/${id}`);
 };
+// Announcements
+export const createAnnouncement = (data) =>
+  API.post("/announcements", data);
+
+export const getAnnouncements = () =>
+  API.get("/announcements");
+
+export const deleteAnnouncement = (id) =>
+  API.delete(`/announcements/${id}`);
+export const getAllAnnouncements = () =>
+  API.get("/announcements");
 export default API;
