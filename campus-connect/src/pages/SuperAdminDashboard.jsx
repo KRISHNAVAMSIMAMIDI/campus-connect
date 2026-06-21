@@ -1,34 +1,14 @@
 import { useState } from "react";
 import "./SuperAdminDashboard.css";
 
+import CreateClub from "../components/CreateClub";
+
 function SuperAdminDashboard() {
   const [activePage, setActivePage] = useState("Dashboard");
 
-  const clubs = [
-    { id: 1, name: "Coding Club", status: "Pending" },
-    { id: 2, name: "Robotics Club", status: "Approved" }
-  ];
-
-  const events = [
-    { id: 1, name: "Hackathon 2026", status: "Pending" },
-    { id: 2, name: "Tech Fest", status: "Approved" }
-  ];
-
-  const users = [
-    { id: 1, name: "Rahul", role: "Student" },
-    { id: 2, name: "Priya", role: "Club Admin" }
-  ];
-
-  const approve = (name) => {
-    alert(`${name} Approved Successfully`);
-  };
-
-  const reject = (name) => {
-    alert(`${name} Rejected`);
-  };
-
   const renderContent = () => {
     switch (activePage) {
+
       case "Dashboard":
         return (
           <>
@@ -52,37 +32,29 @@ function SuperAdminDashboard() {
 
               <div className="card">
                 <h2>12</h2>
-                <p>Pending Requests</p>
+                <p>Club Admins</p>
               </div>
             </div>
           </>
         );
+
+      case "Create Club":
+        return <CreateClub />;
 
       case "Manage Clubs":
         return (
           <>
             <h1>Manage Clubs</h1>
 
-            {clubs.map((club) => (
-              <div className="itemCard" key={club.id}>
-                <h3>{club.name}</h3>
-                <p>Status: {club.status}</p>
+            <div className="itemCard">
+              <h3>Coding Club</h3>
+              <p>Club Admin : Nani</p>
+            </div>
 
-                <button
-                  className="approve"
-                  onClick={() => approve(club.name)}
-                >
-                  Approve
-                </button>
-
-                <button
-                  className="reject"
-                  onClick={() => reject(club.name)}
-                >
-                  Reject
-                </button>
-              </div>
-            ))}
+            <div className="itemCard">
+              <h3>Robotics Club</h3>
+              <p>Club Admin : Sai</p>
+            </div>
           </>
         );
 
@@ -91,71 +63,41 @@ function SuperAdminDashboard() {
           <>
             <h1>Manage Events</h1>
 
-            {events.map((event) => (
-              <div className="itemCard" key={event.id}>
-                <h3>{event.name}</h3>
-                <p>Status: {event.status}</p>
-
-                <button
-                  className="approve"
-                  onClick={() => approve(event.name)}
-                >
-                  Approve Event
-                </button>
-
-                <button
-                  className="reject"
-                  onClick={() => reject(event.name)}
-                >
-                  Reject Event
-                </button>
-              </div>
-            ))}
+            <div className="itemCard">
+              <h3>Hackathon 2026</h3>
+              <p>Pending Approval</p>
+            </div>
           </>
         );
 
       case "Users":
         return (
           <>
-            <h1>User Management</h1>
+            <h1>Users</h1>
 
-            {users.map((user) => (
-              <div className="itemCard" key={user.id}>
-                <h3>{user.name}</h3>
-                <p>{user.role}</p>
+            <div className="itemCard">
+              <h3>Nani</h3>
+              <p>STUDENT, CLUB_ADMIN</p>
+            </div>
 
-                <button
-                  className="approve"
-                  onClick={() => alert(`${user.name} Updated`)}
-                >
-                  Update Role
-                </button>
-
-                <button
-                  className="reject"
-                  onClick={() => alert(`${user.name} Removed`)}
-                >
-                  Remove
-                </button>
-              </div>
-            ))}
+            <div className="itemCard">
+              <h3>Sai</h3>
+              <p>STUDENT</p>
+            </div>
           </>
         );
 
       case "Notifications":
         return (
           <>
-            <h1>Global Notifications</h1>
+            <h1>Notifications</h1>
 
             <textarea
               className="textarea"
               placeholder="Enter announcement..."
-            ></textarea>
+            />
 
-            <button
-              className="sendBtn"
-              onClick={() => alert("Notification Sent")}
-            >
+            <button className="sendBtn">
               Send Notification
             </button>
           </>
@@ -169,17 +111,17 @@ function SuperAdminDashboard() {
             <div className="cards">
               <div className="card">
                 <h2>95%</h2>
-                <p>Event Participation</p>
+                <p>Club Participation</p>
               </div>
 
               <div className="card">
-                <h2>82%</h2>
-                <p>Club Engagement</p>
+                <h2>84%</h2>
+                <p>Event Attendance</p>
               </div>
 
               <div className="card">
                 <h2>1200</h2>
-                <p>Monthly Logins</p>
+                <p>Monthly Users</p>
               </div>
             </div>
           </>
@@ -188,23 +130,15 @@ function SuperAdminDashboard() {
       case "Settings":
         return (
           <>
-            <h1 className="settings-heading">Settings</h1>
+            <h1>Settings</h1>
 
             <div className="settings-card">
-              <div className="setting-item">
-                <h3>Theme Settings</h3>
-                <p>Manage colors, appearance, and layout.</p>
-              </div>
+              <h3>Super Admin Settings</h3>
 
-              <div className="setting-item">
-                <h3>Security Settings</h3>
-                <p>Control passwords, authentication, and access.</p>
-              </div>
-
-              <div className="setting-item">
-                <h3>System Configuration</h3>
-                <p>Manage application-level configurations.</p>
-              </div>
+              <p>
+                Manage application level
+                configurations.
+              </p>
             </div>
           </>
         );
@@ -215,13 +149,19 @@ function SuperAdminDashboard() {
   };
 
   return (
-    <div className="container">
-      <div className="sidebar">
-        <h2 className="logo">Campus Connect</h2>
+    <div className="super-admin-container">
+
+      <aside className="super-admin-sidebar">
+
+        <h2 className="logo">
+          CampusConnect
+        </h2>
 
         <ul className="menu">
+
           {[
             "Dashboard",
+            "Create Club",
             "Manage Clubs",
             "Manage Events",
             "Users",
@@ -231,16 +171,27 @@ function SuperAdminDashboard() {
           ].map((item) => (
             <li
               key={item}
-              className={activePage === item ? "active" : ""}
-              onClick={() => setActivePage(item)}
+              className={
+                activePage === item
+                  ? "active"
+                  : ""
+              }
+              onClick={() =>
+                setActivePage(item)
+              }
             >
               {item}
             </li>
           ))}
-        </ul>
-      </div>
 
-      <div className="content">{renderContent()}</div>
+        </ul>
+
+      </aside>
+
+      <main className="super-admin-content">
+        {renderContent()}
+      </main>
+
     </div>
   );
 }
