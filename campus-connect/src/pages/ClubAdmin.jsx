@@ -5,18 +5,29 @@ import {
   createRecruitment,
   getRecruitments,
   deleteRecruitment,
+
   getAllApplications,
   approveApplication,
   rejectApplication,
+
   createAnnouncement,
   getAnnouncements,
   deleteAnnouncement,
   getAllAnnouncements,
-  getAllEvents,
-  getClubById,
-  updateClub
-} from "../services/api";
 
+  getAllEvents,
+
+  getClubById,
+  getClubByAdminEmail,
+
+  getRecruitmentsByClubId,
+  getApplicationsByClubId,
+  getAnnouncementsByClubId,
+  getEventsByClubId,
+
+  updateClub
+
+} from "../services/api";
 function ClubAdmin() {
   const [activeSection, setActiveSection] = useState("dashboard");
   const [recruitments, setRecruitments] = useState([]);
@@ -25,15 +36,15 @@ function ClubAdmin() {
     description: "",
     venue: "",
     eventDate: "",
-    organizer: "Coding Club",
+    organizer: "",
     imageUrl: "",
     status: "ACTIVE",
   });
   const [applications, setApplications] = useState([]);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
   const [recruitmentData, setRecruitmentData] = useState({
-    clubId: 1,
-    clubName: "Coding Club",
+    clubId: null,
+    clubName: "",
     role: "",
     category: "",
     description: "",
@@ -49,16 +60,8 @@ function ClubAdmin() {
     announcements: 0,
   });
 
- const [announcementData, setAnnouncementData] = useState({
-  clubId: 1,
-  clubName: "Coding Club",
-  title: "",
-  message: "",
-  date: "",
- });
- const [editMode, setEditMode] = useState(false);
  const [clubData, setClubData] = useState({
-  id: 1,
+  id: null,
   name: "",
   tagline: "",
   description: "",
@@ -72,14 +75,36 @@ function ClubAdmin() {
   instagramUrl: "",
   linkedinUrl: "",
 });
+
+const [announcementData, setAnnouncementData] = useState({
+  clubId: null,
+  clubName: "",
+  title: "",
+  message: "",
+  date: "",
+});
+ const [editMode, setEditMode] = useState(false);
 const fetchClubProfile = async () => {
   try {
-    const response = await getClubById(1);
 
-    setClubData(response.data);
+    const user =
+      JSON.parse(
+        localStorage.getItem("user")
+      );
+
+    const response =
+      await getClubByAdminEmail(
+        user.email
+      );
+
+    setClubData(
+      response.data
+    );
 
   } catch (error) {
+
     console.error(error);
+
   }
 };
 
@@ -89,12 +114,24 @@ const fetchClubProfile = async () => {
       [e.target.name]: e.target.value,
     });
   };
-    const fetchAnnouncements = async () => {
+  const fetchAnnouncements = async () => {
   try {
-    const response = await getAnnouncements();
-    setAnnouncements(response.data);
+
+    if (!clubData.id) return;
+
+    const response =
+      await getAnnouncementsByClubId(
+        clubData.id
+      );
+
+    setAnnouncements(
+      response.data
+    );
+
   } catch (error) {
+
     console.error(error);
+
   }
 };
 
@@ -106,22 +143,46 @@ const fetchClubProfile = async () => {
   };
 
   const fetchRecruitments = async () => {
-    try {
-      const response = await getRecruitments();
-      setRecruitments(response?.data || []);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  try {
+
+    if (!clubData.id) return;
+
+    const response =
+      await getRecruitmentsByClubId(
+        clubData.id
+      );
+
+    setRecruitments(
+      response.data
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+};
 
   const fetchApplications = async () => {
-    try {
-      const response = await getAllApplications();
-      setApplications(response?.data || []);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  try {
+
+    if (!clubData.id) return;
+
+    const response =
+      await getApplicationsByClubId(
+        clubData.id
+      );
+
+    setApplications(
+      response.data
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+};
   const handlePostAnnouncement = async () => {
   try {
     await createAnnouncement(announcementData);
@@ -131,8 +192,8 @@ const fetchClubProfile = async () => {
     fetchAnnouncements();
 
     setAnnouncementData({
-      clubId: 1,
-      clubName: "Coding Club",
+      clubId: clubData?.id || null,
+      clubName: clubData?.name || "",
       title: "",
       message: "",
       date: "",
@@ -174,11 +235,25 @@ const handleReject = async (id) => {
 
   const fetchDashboardData = async () => {
     try {
-      const eventsRes = await getAllEvents();
-      const recruitmentsRes = await getRecruitments();
-      const applicationsRes = await getAllApplications();
-      const announcementsRes = await getAllAnnouncements();
+     const eventsRes =
+  await getEventsByClubId(
+    clubData.id
+  );
 
+const recruitmentsRes =
+  await getRecruitmentsByClubId(
+    clubData.id
+  );
+
+const applicationsRes =
+  await getApplicationsByClubId(
+    clubData.id
+  );
+
+const announcementsRes =
+  await getAnnouncementsByClubId(
+    clubData.id
+  );
       setDashboardData({
         events: eventsRes.data.length,
         recruitments: recruitmentsRes.data.length,
@@ -189,18 +264,25 @@ const handleReject = async (id) => {
       console.error(error);
     }
   };
-
   useEffect(() => {
-    const loadData = async () => {
-      await fetchRecruitments();
-      await fetchApplications();
-      await fetchAnnouncements();
-      await fetchDashboardData();
-      await fetchClubProfile();
 
-    };
-    loadData();
-  }, []);
+  fetchClubProfile();
+
+}, []);
+
+ useEffect(() => {
+
+  if (!clubData.id) return;
+
+  fetchRecruitments();
+
+  fetchApplications();
+
+  fetchAnnouncements();
+
+  fetchDashboardData();
+
+}, [clubData.id]);
   const handleClubChange = (e) => {
   setClubData({
     ...clubData,
@@ -230,8 +312,8 @@ const handleReject = async (id) => {
       alert("Recruitment Posted Successfully");
       fetchRecruitments();
       setRecruitmentData({
-        clubId: 1,
-        clubName: "Coding Club",
+        clubId: clubData?.id || null,
+        clubName: clubData?.name || "",
         role: "",
         category: "",
         description: "",
@@ -264,7 +346,7 @@ const handleReject = async (id) => {
         description: "",
         venue: "",
         eventDate: "",
-        organizer: "Coding Club",
+        organizer: clubData?.name || "",
         imageUrl: "",
         status: "ACTIVE",
       });
@@ -321,7 +403,7 @@ const handleReject = async (id) => {
        {activeSection === "dashboard" && (
   <div>
 
-    <h1>Coding Club Dashboard</h1>
+    <h1>{clubData.name} Dashboard</h1>
 
     <div className="stats-grid">
 
@@ -673,13 +755,17 @@ const handleReject = async (id) => {
       className="admin-logo"
     />
 
-    <div>
+    <div className="club-info">
 
-      <h1>{clubData.name}</h1>
+  <h1 className="club-title">
+    {clubData.name}
+  </h1>
 
-      <p>{clubData.tagline}</p>
+  <p className="club-tagline">
+    {clubData.tagline}
+  </p>
 
-    </div>
+</div>
 
   </div>
 

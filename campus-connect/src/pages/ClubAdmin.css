@@ -486,3 +486,20 @@
 .edit-form button:hover {
   background: #1d4ed8;
 }
+.club-info{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.club-title{
+  font-size:40px;
+  font-weight:700;
+  margin:0;
+}
+
+.club-tagline{
+  font-size:18px;
+  color:#6b7280;
+  margin-top:8px;
+}

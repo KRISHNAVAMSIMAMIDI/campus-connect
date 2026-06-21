@@ -88,6 +88,9 @@ export const updateClub = (id, clubData) => {
 export const getUserClubs = (userId) => {
   return API.get(`/memberships/user/${userId}`);
 };
+export const getClubByAdminEmail = (email) => {
+  return API.get(`/clubs/admin?email=${email}`);
+};
 
 // Recruitments
 export const getAllRecruitments = () => {
@@ -158,4 +161,37 @@ export const deleteAnnouncement = (id) =>
   API.delete(`/announcements/${id}`);
 export const getAllAnnouncements = () =>
   API.get("/announcements");
+// Club Admin APIs
+
+export const getRecruitmentsByClubId = (
+  clubId
+) => {
+  return API.get(
+    `/recruitments/club/${clubId}`
+  );
+};
+
+export const getApplicationsByClubId = (
+  clubId
+) => {
+  return API.get(
+    `/applications/club/${clubId}`
+  );
+};
+
+export const getAnnouncementsByClubId = (
+  clubId
+) => {
+  return API.get(
+    `/announcements/club/${clubId}`
+  );
+};
+
+export const getEventsByClubId = (
+  clubId
+) => {
+  return API.get(
+    `/events/club/${clubId}`
+  );
+};
 export default API;
