@@ -77,7 +77,7 @@ function Dashboard() {
           </button>
 
           <img
-            src="/GVPLOGO.jpg"
+            src="/image.png"
             alt="College Logo"
             className="logo"
           />
