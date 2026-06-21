@@ -5,6 +5,7 @@ import {
   getAllClubs,
   getAllEvents,
   getAllRecruitments,
+  getAnnouncements,
 } from "../services/api";
 
 import "./Dashboard.css";
@@ -15,6 +16,9 @@ function Dashboard() {
   const [clubs, setClubs] = useState([]);
   const [events, setEvents] = useState([]);
   const [recruitments, setRecruitments] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
+  const [notificationCount, setNotificationCount] =
+    useState(0);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,15 +45,34 @@ function Dashboard() {
           clubsRes,
           eventsRes,
           recruitmentsRes,
+          announcementsRes,
         ] = await Promise.all([
           getAllClubs(),
           getAllEvents(),
           getAllRecruitments(),
+          getAnnouncements(),
         ]);
 
         setClubs(clubsRes.data);
         setEvents(eventsRes.data);
         setRecruitments(recruitmentsRes.data);
+        setNotificationCount(
+          announcementsRes.data.length
+        );
+        setAnnouncements(
+          [...announcementsRes.data]
+            .sort((a, b) => {
+              return (
+                new Date(
+                  b.date || b.createdAt || 0
+                ) -
+                new Date(
+                  a.date || a.createdAt || 0
+                )
+              );
+            })
+            .slice(0, 3)
+        );
       } catch (error) {
         console.error("Dashboard Error:", error);
       }
@@ -102,7 +125,7 @@ function Dashboard() {
             </button>
 
             <span className="notification-badge">
-              3
+              {notificationCount}
             </span>
           </div>
 
@@ -231,7 +254,43 @@ function Dashboard() {
         {/* CONTENT */}
         <main className="content">
           {outlet || (
-            <>              {/* ACTIVE CLUBS */}
+            <>
+              {/* ANNOUNCEMENTS */}
+              <section>
+                <h2>
+                  Announcements
+                </h2>
+
+                {announcements.length === 0 ? (
+                  <div className="announcement">
+                    No announcements yet.
+                  </div>
+                ) : (
+                  announcements.map((announcement) => (
+                    <div
+                      className="announcement"
+                      key={
+                        announcement.id ||
+                        announcement.announcementId ||
+                        `${announcement.title}-${announcement.date}`
+                      }
+                    >
+                      <h4>{announcement.title}</h4>
+                      <p>{announcement.message}</p>
+                      <p>
+                        {announcement.clubName ||
+                          "Campus Connect"}
+                        {" | "}
+                        {announcement.date ||
+                          announcement.createdAt ||
+                          ""}
+                      </p>
+                    </div>
+                  ))
+                )}
+              </section>
+
+              {/* ACTIVE CLUBS */}
               <section>
                 <h2>Active Clubs</h2>
 
@@ -352,30 +411,6 @@ function Dashboard() {
     ))}
   </div>
 </section>
-
-              {/* ANNOUNCEMENTS */}
-              <section>
-                <h2>
-                  Announcements
-                </h2>
-
-                <div className="announcement">
-                  Welcome to
-                  CampusConnect.
-                </div>
-
-                <div className="announcement">
-                  Check active
-                  recruitments before
-                  deadlines.
-                </div>
-
-                <div className="announcement">
-                  Participate in club
-                  activities and
-                  upcoming events.
-                </div>
-              </section>
             </>
           )}
         </main>

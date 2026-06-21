@@ -4,6 +4,7 @@ import "./SuperAdminDashboard.css";
 import CreateClub from "../components/CreateClub";
 import {
   approveAdminEvent,
+  createAnnouncement,
   deleteAdminClub,
   deleteAdminEvent,
   deleteAdminUser,
@@ -13,7 +14,6 @@ import {
   getAdminEvents,
   getAdminUsers,
   rejectAdminEvent,
-  sendAdminNotification,
   updateAdminClub,
   updateAdminUserRole,
 } from "../services/api";
@@ -41,6 +41,14 @@ const getValue = (...values) => {
       value !== null &&
       value !== ""
   );
+};
+
+const getDashboardStat = (dashboard, ...keys) => {
+  const value = getValue(
+    ...keys.map((key) => dashboard?.[key])
+  );
+
+  return value ?? 0;
 };
 
 function SuperAdminDashboard() {
@@ -358,9 +366,12 @@ function SuperAdminDashboard() {
     setLoading(true);
 
     try {
-      await sendAdminNotification(
-        notification.trim()
-      );
+      await createAnnouncement({
+        clubId: 0,
+        clubName: "Campus Connect",
+        title: "Campus Announcement",
+        message: notification.trim(),
+      });
       setNotification("");
       setSuccess("Notification sent successfully.");
     } catch (err) {
@@ -394,10 +405,11 @@ function SuperAdminDashboard() {
             <div className="cards">
               <div className="card">
                 <h2>
-                  {getValue(
-                    dashboard?.totalStudents,
-                    dashboard?.students,
-                    0
+                  {getDashboardStat(
+                    dashboard,
+                    "totalStudents",
+                    "students",
+                    "studentCount"
                   )}
                 </h2>
                 <p>Students</p>
@@ -405,10 +417,11 @@ function SuperAdminDashboard() {
 
               <div className="card">
                 <h2>
-                  {getValue(
-                    dashboard?.totalClubs,
-                    dashboard?.clubs,
-                    0
+                  {getDashboardStat(
+                    dashboard,
+                    "totalClubs",
+                    "clubs",
+                    "clubCount"
                   )}
                 </h2>
                 <p>Clubs</p>
@@ -416,10 +429,11 @@ function SuperAdminDashboard() {
 
               <div className="card">
                 <h2>
-                  {getValue(
-                    dashboard?.totalEvents,
-                    dashboard?.events,
-                    0
+                  {getDashboardStat(
+                    dashboard,
+                    "totalEvents",
+                    "events",
+                    "eventCount"
                   )}
                 </h2>
                 <p>Events</p>
@@ -427,10 +441,11 @@ function SuperAdminDashboard() {
 
               <div className="card">
                 <h2>
-                  {getValue(
-                    dashboard?.totalClubAdmins,
-                    dashboard?.clubAdmins,
-                    0
+                  {getDashboardStat(
+                    dashboard,
+                    "totalClubAdmins",
+                    "clubAdmins",
+                    "clubAdminCount"
                   )}
                 </h2>
                 <p>Club Admins</p>

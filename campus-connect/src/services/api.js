@@ -127,9 +127,17 @@ export const deleteRecruitment = (id) => {
   );
 };
 
+export const getRecruitmentsByClubId = (clubId) => {
+  return API.get(`/recruitments/club/${clubId}`);
+};
+
 // Applications
 export const getAllApplications = () => {
   return API.get("/applications");
+};
+
+export const getApplicationsByClubId = (clubId) => {
+  return API.get(`/applications/club/${clubId}`);
 };
 
 export const approveApplication = (id) => {
@@ -153,6 +161,31 @@ export const createEvent = (eventData) => {
   return API.post("/events", eventData);
 };
 
+export const getEventsByClubId = (clubId) => {
+  return API.get(`/events/club/${clubId}`);
+};
+
+// Announcements
+export const createAnnouncement = (announcementData) => {
+  return API.post("/announcements", announcementData);
+};
+
+export const getAnnouncements = () => {
+  return API.get("/announcements");
+};
+
+export const getAllAnnouncements = () => {
+  return API.get("/announcements");
+};
+
+export const getAnnouncementsByClubId = (clubId) => {
+  return API.get(`/announcements/club/${clubId}`);
+};
+
+export const deleteAnnouncement = (id) => {
+  return API.delete(`/announcements/${id}`);
+};
+
 // Create Club
 export const createClub = (clubData) => {
   return API.post(
@@ -161,7 +194,6 @@ export const createClub = (clubData) => {
   );
 };
 
-<<<<<<< HEAD
 // Super Admin
 export const getAdminDashboard = () => {
   return API.get("/admin/dashboard");
@@ -222,50 +254,3 @@ export const getAdminAnalytics = () => {
 };
 
 export default API;
-=======
-// Announcements
-export const createAnnouncement = (data) =>
-  API.post("/announcements", data);
-
-export const getAnnouncements = () =>
-  API.get("/announcements");
-
-export const deleteAnnouncement = (id) =>
-  API.delete(`/announcements/${id}`);
-export const getAllAnnouncements = () =>
-  API.get("/announcements");
-// Club Admin APIs
-
-export const getRecruitmentsByClubId = (
-  clubId
-) => {
-  return API.get(
-    `/recruitments/club/${clubId}`
-  );
-};
-
-export const getApplicationsByClubId = (
-  clubId
-) => {
-  return API.get(
-    `/applications/club/${clubId}`
-  );
-};
-
-export const getAnnouncementsByClubId = (
-  clubId
-) => {
-  return API.get(
-    `/announcements/club/${clubId}`
-  );
-};
-
-export const getEventsByClubId = (
-  clubId
-) => {
-  return API.get(
-    `/events/club/${clubId}`
-  );
-};
-export default API;
->>>>>>> 60c45ee2abf828d928a29fda97134cdb31018165
