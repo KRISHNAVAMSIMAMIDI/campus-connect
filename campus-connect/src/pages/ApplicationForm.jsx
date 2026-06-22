@@ -47,23 +47,6 @@ const getRecruitmentClubName = (recruitment) => (
   ""
 );
 
-const storeClubApplication = (clubId, application) => {
-  if (!clubId) return;
-
-  try {
-    const storageKey = `clubApplications:${clubId}`;
-    const existing = normalizeArray(
-      JSON.parse(localStorage.getItem(storageKey))
-    );
-    localStorage.setItem(
-      storageKey,
-      JSON.stringify([application, ...existing])
-    );
-  } catch (error) {
-    console.warn("Unable to store application locally", error);
-  }
-};
-
 function ApplicationForm() {
 
   const { id } = useParams();
@@ -157,19 +140,7 @@ function ApplicationForm() {
 
       };
 
-      const response = await submitApplication(applicationPayload);
-
-      storeClubApplication(
-        clubId,
-        {
-          id:
-            response.data?.id ??
-            response.data?._id ??
-            `local-${Date.now()}`,
-          ...applicationPayload,
-          ...response.data,
-        }
-      );
+      await submitApplication(applicationPayload);
 
       alert(
         "Application Submitted Successfully"

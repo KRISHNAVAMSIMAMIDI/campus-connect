@@ -43,54 +43,6 @@ function Events() {
 
   }, []);
 
-  // Listen for events created by ClubAdmin (stored in localStorage)
-  useEffect(() => {
-    const addEventToState = (newEvent) => {
-      if (!newEvent) return;
-      setEvents((prev) => {
-        if (prev.some((e) => e.id === newEvent.id)) return prev;
-        return [newEvent, ...prev];
-      });
-    };
-
-    const storageHandler = (e) => {
-      if (e.key === "newEvent" && e.newValue) {
-        try {
-          const parsed = JSON.parse(e.newValue);
-          addEventToState(parsed);
-        } catch (err) {
-          console.warn("Failed parsing newEvent from storage", err);
-        }
-      }
-    };
-
-    const customHandler = (e) => {
-      // Custom event dispatched from same tab
-      if (e && e.detail) {
-        addEventToState(e.detail);
-      }
-    };
-
-    window.addEventListener("storage", storageHandler);
-    window.addEventListener("newEvent", customHandler);
-
-    // Check if there's a pending newEvent on mount
-    try {
-      const existing = localStorage.getItem("newEvent");
-      if (existing) {
-        const parsed = JSON.parse(existing);
-        addEventToState(parsed);
-      }
-    } catch (err) {
-      console.warn("Failed reading newEvent from localStorage", err);
-    }
-
-    return () => {
-      window.removeEventListener("storage", storageHandler);
-      window.removeEventListener("newEvent", customHandler);
-    };
-  }, []);
-
   if (loading) {
 
     return (

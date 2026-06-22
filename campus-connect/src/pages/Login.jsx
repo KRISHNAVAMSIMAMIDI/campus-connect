@@ -25,7 +25,7 @@ function Login() {
           role,
         }
       );
-  alert(JSON.stringify(response.data));
+
       const payload = response.data;
 
       const user =

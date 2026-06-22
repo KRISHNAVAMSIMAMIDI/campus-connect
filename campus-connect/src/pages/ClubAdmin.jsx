@@ -4,16 +4,14 @@ import {
   createEvent,
   createRecruitment,
   deleteRecruitment,
-  getAllRecruitments,
-
   getAllApplications,
+  getAllRecruitments,
   approveApplication,
   rejectApplication,
 
   createAnnouncement,
   deleteAnnouncement,
   getClubByAdminEmail,
-  getAllEvents,
 
   getRecruitmentsByClubId,
   getApplicationsByClubId,
@@ -42,23 +40,6 @@ const getClubId = (club) => (
   null
 );
 
-const getEventClubId = (event) => (
-  event?.clubId ??
-  event?.club_id ??
-  event?.club?.id ??
-  event?.club?._id ??
-  null
-);
-
-const getEventClubName = (event) => (
-  event?.clubName ??
-  event?.club_name ??
-  event?.club?.name ??
-  event?.club?.clubName ??
-  event?.organizer ??
-  ""
-);
-
 const getRecruitmentClubId = (recruitment) => (
   recruitment?.clubId ??
   recruitment?.club_id ??
@@ -72,22 +53,6 @@ const getRecruitmentClubName = (recruitment) => (
   recruitment?.club_name ??
   recruitment?.club?.name ??
   recruitment?.club?.clubName ??
-  ""
-);
-
-const getApplicationClubId = (application) => (
-  application?.clubId ??
-  application?.club_id ??
-  application?.club?.id ??
-  application?.club?._id ??
-  null
-);
-
-const getApplicationClubName = (application) => (
-  application?.clubName ??
-  application?.club_name ??
-  application?.club?.name ??
-  application?.club?.clubName ??
   ""
 );
 
@@ -111,34 +76,6 @@ const normalizeArray = (payload) => {
   return [];
 };
 
-const mergeRecordsById = (...groups) => {
-  const seen = new Set();
-  const merged = [];
-
-  groups.flat().forEach((record) => {
-    const id = getRecordId(record);
-    const key = id ? String(id) : JSON.stringify(record);
-
-    if (seen.has(key)) return;
-    seen.add(key);
-    merged.push(record);
-  });
-
-  return merged;
-};
-
-const isSameClubEvent = (event, club) => {
-  const clubId = getClubId(club);
-  const eventClubId = getEventClubId(event);
-  const clubName = (club?.name || "").trim().toLowerCase();
-  const eventClubName = getEventClubName(event).trim().toLowerCase();
-
-  return (
-    (clubId && eventClubId && String(eventClubId) === String(clubId)) ||
-    (clubName && eventClubName && eventClubName === clubName)
-  );
-};
-
 const isSameClubRecruitment = (recruitment, club) => {
   const clubId = getClubId(club);
   const recruitmentClubId = getRecruitmentClubId(recruitment);
@@ -153,51 +90,16 @@ const isSameClubRecruitment = (recruitment, club) => {
   );
 };
 
-const isSameClubApplication = (application, club, recruitmentIds) => {
-  const clubId = getClubId(club);
-  const applicationClubId = getApplicationClubId(application);
-  const clubName = (club?.name || "").trim().toLowerCase();
-  const applicationClubName = getApplicationClubName(application)
-    .trim()
-    .toLowerCase();
-  const recruitmentId = getApplicationRecruitmentId(application);
-
-  return (
-    (clubId && applicationClubId && String(applicationClubId) === String(clubId)) ||
-    (clubName && applicationClubName && applicationClubName === clubName) ||
-    recruitmentIds.has(String(recruitmentId))
+const getApplicationsForRecruitments = (allApplications, clubRecruitments) => {
+  const recruitmentIds = new Set(
+    clubRecruitments
+      .map((recruitment) => String(getRecordId(recruitment)))
+      .filter(Boolean)
   );
-};
 
-const getStoredClubApplications = (clubId) => {
-  try {
-    return normalizeArray(
-      JSON.parse(localStorage.getItem(`clubApplications:${clubId}`))
-    );
-  } catch {
-    return [];
-  }
-};
-
-const getStoredClubEvents = (clubId) => {
-  try {
-    return normalizeArray(
-      JSON.parse(localStorage.getItem(`clubEvents:${clubId}`))
-    );
-  } catch {
-    return [];
-  }
-};
-
-const setStoredClubEvents = (clubId, nextEvents) => {
-  try {
-    localStorage.setItem(
-      `clubEvents:${clubId}`,
-      JSON.stringify(nextEvents)
-    );
-  } catch (error) {
-    console.warn("Unable to store club events locally", error);
-  }
+  return allApplications.filter((application) =>
+    recruitmentIds.has(String(getApplicationRecruitmentId(application)))
+  );
 };
 
 function ClubAdmin() {
@@ -267,211 +169,58 @@ const [announcementData, setAnnouncementData] = useState({
     });
   };
 
-
-  const fetchRecruitments = useCallback(async () => {
-    try {
-
-      const clubId = getClubId(clubData);
-      if (!clubId) return;
-
-      const response =
-        await getRecruitmentsByClubId(
-          clubId
-        );
-
-      let clubRecruitments = normalizeArray(response.data);
-
-      if (clubRecruitments.length === 0) {
-        const allRecruitmentsRes = await getAllRecruitments();
-        clubRecruitments = normalizeArray(allRecruitmentsRes.data)
-          .filter((recruitment) =>
-            isSameClubRecruitment(recruitment, clubData)
-          );
-      }
-
-      setRecruitments(clubRecruitments);
-
-    } catch (error) {
-
-      console.error(error);
-
-    }
-  }, [clubData]);
-
-  const fetchApplications = useCallback(async () => {
-    try {
-
-      const clubId = getClubId(clubData);
-      if (!clubId) return;
-
-      const response =
-        await getApplicationsByClubId(
-          clubId
-        );
-
-      const clubApplications = mergeRecordsById(
-        normalizeArray(response.data),
-        getStoredClubApplications(clubId)
-      );
-
-      if (clubApplications.length > 0) {
-        setApplications(clubApplications);
-        return;
-      }
-
-      const [allApplicationsRes, clubRecruitmentsRes] =
-        await Promise.all([
-          getAllApplications(),
-          getRecruitmentsByClubId(clubId),
-        ]);
-
-      let clubRecruitments = normalizeArray(clubRecruitmentsRes.data);
-
-      if (clubRecruitments.length === 0) {
-        const allRecruitmentsRes = await getAllRecruitments();
-        clubRecruitments = normalizeArray(allRecruitmentsRes.data)
-          .filter((recruitment) =>
-            isSameClubRecruitment(recruitment, clubData)
-          );
-      }
-
-      const recruitmentIds = new Set(
-        clubRecruitments
-          .map((recruitment) => String(getRecordId(recruitment)))
-          .filter(Boolean)
-      );
-
-      const filteredApplications = mergeRecordsById(
-        normalizeArray(allApplicationsRes.data)
-          .filter((application) =>
-            isSameClubApplication(application, clubData, recruitmentIds)
-          ),
-        getStoredClubApplications(clubId)
-      );
-
-      setApplications(filteredApplications);
-
-    } catch (error) {
-
-      console.error(error);
-
-    }
-  }, [clubData]);
-
-  const fetchAnnouncements = useCallback(async () => {
-    try {
-
-      const clubId = getClubId(clubData);
-      if (!clubId) return;
-
-      const response = await getAnnouncementsByClubId(clubId);
-
-      setAnnouncements(normalizeArray(response.data));
-    } catch (error) {
-      console.error(error);
-    }
-  }, [clubData]);
-
-  const fetchEvents = useCallback(async () => {
-    try {
-
-      const clubId = getClubId(clubData);
-      if (!clubId) return;
-
-      const response = await getEventsByClubId(clubId);
-      let clubEvents = normalizeArray(response.data);
-
-      if (clubEvents.length === 0) {
-        const allEventsRes = await getAllEvents();
-        clubEvents = normalizeArray(allEventsRes.data)
-          .filter((event) => isSameClubEvent(event, clubData));
-      }
-
-      setEvents(
-        mergeRecordsById(
-          clubEvents,
-          getStoredClubEvents(clubId)
-        )
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  }, [clubData]);
-
-  const fetchDashboardData = useCallback(async () => {
+  const loadClubAdminData = useCallback(async () => {
     try {
       const clubId = getClubId(clubData);
       if (!clubId) return;
 
-      const eventsRes =
-        await getEventsByClubId(
-          clubId
-        );
+      const [
+        eventsRes,
+        recruitmentsRes,
+        announcementsRes,
+      ] = await Promise.all([
+        getEventsByClubId(clubId),
+        getRecruitmentsByClubId(clubId),
+        getAnnouncementsByClubId(clubId),
+      ]);
 
-      const recruitmentsRes =
-        await getRecruitmentsByClubId(
-          clubId
-        );
-
-      const applicationsRes =
-        await getApplicationsByClubId(
-          clubId
-        );
-
-      const announcementsRes =
-        await getAnnouncementsByClubId(
-          clubId
-        );
-
-      let clubEvents = normalizeArray(eventsRes.data);
-      const clubRecruitments = normalizeArray(recruitmentsRes.data);
+      const clubEvents = normalizeArray(eventsRes.data);
+      let clubRecruitments = normalizeArray(recruitmentsRes.data);
       const clubAnnouncements = normalizeArray(announcementsRes.data);
-      let clubApplications = mergeRecordsById(
-        normalizeArray(applicationsRes.data),
-        getStoredClubApplications(clubId)
-      );
 
-      if (clubEvents.length === 0) {
-        const allEventsRes = await getAllEvents();
-        clubEvents = normalizeArray(allEventsRes.data)
-          .filter((event) => isSameClubEvent(event, clubData));
-      }
-
-      clubEvents = mergeRecordsById(
-        clubEvents,
-        getStoredClubEvents(clubId)
-      );
-
-      let resolvedClubRecruitments = clubRecruitments;
-
-      if (resolvedClubRecruitments.length === 0) {
+      if (clubRecruitments.length === 0) {
         const allRecruitmentsRes = await getAllRecruitments();
-        resolvedClubRecruitments = normalizeArray(allRecruitmentsRes.data)
+        clubRecruitments = normalizeArray(allRecruitmentsRes.data)
           .filter((recruitment) =>
             isSameClubRecruitment(recruitment, clubData)
           );
+      }
+
+      let clubApplications = [];
+
+      try {
+        const applicationsRes = await getApplicationsByClubId(clubId);
+        clubApplications = normalizeArray(applicationsRes.data);
+      } catch (error) {
+        console.warn("Club applications endpoint failed, falling back to all applications", error);
       }
 
       if (clubApplications.length === 0) {
         const allApplicationsRes = await getAllApplications();
-        const recruitmentIds = new Set(
-          resolvedClubRecruitments
-            .map((recruitment) => String(getRecordId(recruitment)))
-            .filter(Boolean)
-        );
-
-        clubApplications = mergeRecordsById(
-          normalizeArray(allApplicationsRes.data)
-            .filter((application) =>
-              isSameClubApplication(application, clubData, recruitmentIds)
-            ),
-          getStoredClubApplications(clubId)
+        clubApplications = getApplicationsForRecruitments(
+          normalizeArray(allApplicationsRes.data),
+          clubRecruitments
         );
       }
 
+      setEvents(clubEvents);
+      setRecruitments(clubRecruitments);
+      setApplications(clubApplications);
+      setAnnouncements(clubAnnouncements);
+
       setDashboardData({
         events: clubEvents.length,
-        recruitments: resolvedClubRecruitments.length,
+        recruitments: clubRecruitments.length,
         applications: clubApplications.length,
         announcements: clubAnnouncements.length,
       });
@@ -536,39 +285,23 @@ const [announcementData, setAnnouncementData] = useState({
   const refreshClubAdminData = useCallback(async () => {
     if (!getClubId(clubData)) return;
 
-    await fetchRecruitments();
-    await fetchApplications();
-    await fetchAnnouncements();
-    await fetchEvents();
-    await fetchDashboardData();
+    await loadClubAdminData();
   }, [
     clubData,
-    fetchRecruitments,
-    fetchApplications,
-    fetchAnnouncements,
-    fetchEvents,
-    fetchDashboardData,
+    loadClubAdminData,
   ]);
 
   useEffect(() => {
     if (!getClubId(clubData)) return;
 
     const load = async () => {
-      await fetchRecruitments();
-      await fetchApplications();
-      await fetchAnnouncements();
-      await fetchEvents();
-      await fetchDashboardData();
+      await loadClubAdminData();
     };
 
     load();
   }, [
     clubData,
-    fetchRecruitments,
-    fetchApplications,
-    fetchAnnouncements,
-    fetchEvents,
-    fetchDashboardData,
+    loadClubAdminData,
   ]);
 
   const handleRecruitmentChange = (e) => {
@@ -587,10 +320,9 @@ const [announcementData, setAnnouncementData] = useState({
       clubName: clubData.name,
     });
 
-    alert("Announcement Posted Successfully");
+    await refreshClubAdminData();
 
-    await fetchAnnouncements();
-    await fetchDashboardData();
+    alert("Announcement Posted Successfully");
 
     setAnnouncementData({
       clubId,
@@ -609,8 +341,7 @@ const handleDeleteAnnouncement = async (id) => {
   try {
     await deleteAnnouncement(id);
 
-    await fetchAnnouncements();
-    await fetchDashboardData();
+    await refreshClubAdminData();
 
     alert("Announcement Deleted");
   } catch (error) {
@@ -620,8 +351,7 @@ const handleDeleteAnnouncement = async (id) => {
   const handleApprove = async (id) => {
   try {
     await approveApplication(id);
-    await fetchApplications();
-    await fetchDashboardData();
+    await refreshClubAdminData();
   } catch (error) {
     console.error(error);
   }
@@ -630,8 +360,7 @@ const handleDeleteAnnouncement = async (id) => {
 const handleReject = async (id) => {
   try {
     await rejectApplication(id);
-    await fetchApplications();
-    await fetchDashboardData();
+    await refreshClubAdminData();
   } catch (error) {
     console.error(error);
   }
@@ -669,9 +398,8 @@ const handleReject = async (id) => {
         clubId,
         clubName: clubData.name,
       });
+      await refreshClubAdminData();
       alert("Recruitment Posted Successfully");
-      await fetchRecruitments();
-      await fetchDashboardData();
       setRecruitmentData({
         clubId,
         clubName: clubData?.name || "",
@@ -700,40 +428,9 @@ const handleReject = async (id) => {
         organizer: eventData.organizer || clubData.name,
       };
 
-      const response = await createEvent(eventPayload);
-      const created = {
-        id:
-          response.data?.id ??
-          response.data?._id ??
-          `local-${Date.now()}`,
-        ...eventPayload,
-        ...response.data,
-      };
+      await createEvent(eventPayload);
 
-      try {
-        localStorage.setItem("newEvent", JSON.stringify(created));
-        window.dispatchEvent(new CustomEvent("newEvent", { detail: created }));
-      } catch (e) {
-        console.warn("localStorage setItem failed", e);
-      }
-
-      setEvents((prev) => {
-        const createdId = getRecordId(created);
-        const alreadyExists = prev.some(
-          (event) => String(getRecordId(event)) === String(createdId)
-        );
-
-        if (alreadyExists) return prev;
-        const nextEvents = [created, ...prev];
-        setStoredClubEvents(clubId, nextEvents);
-        return nextEvents;
-      });
-
-      setDashboardData((prev) => ({
-        ...prev,
-        events: prev.events + 1,
-      }));
-
+      await refreshClubAdminData();
       alert("Event Created Successfully");
       setEventData({
         eventName: "",
@@ -765,9 +462,7 @@ const handleReject = async (id) => {
 
     try {
       await deleteRecruitment(id);
-      await fetchRecruitments();
-      await fetchApplications();
-      await fetchDashboardData();
+      await refreshClubAdminData();
       alert("Recruitment deleted successfully.");
     } catch (error) {
       console.error("Delete recruitment failed", error);
@@ -824,22 +519,15 @@ const handleReject = async (id) => {
         <h2>{dashboardData.announcements}</h2>
         <p>Announcements</p>
       </div>
-      <div className="recent-section">
+     
 
-  <h2>Recent Recruitments</h2>
-
-  {recruitments.slice(0, 3).map((rec) => (
-    <div key={getRecordId(rec)}>
-      <strong>{rec.role}</strong>
-      <p>{rec.team}</p>
-    </div>
-  ))}
+  
 
 </div>
 
     </div>
 
-  </div>
+
 )}
         {activeSection === "events" && (
           <div className="form-section">
